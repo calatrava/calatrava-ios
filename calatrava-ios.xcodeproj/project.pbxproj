@@ -19,7 +19,6 @@
 		C6301C3A15C208CF00E9E27F /* TWBridgeURLRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301BF715C208CF00E9E27F /* TWBridgeURLRequestManager.m */; };
 		C6301C3B15C208CF00E9E27F /* BridgeSupportController.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301BF915C208CF00E9E27F /* BridgeSupportController.h */; };
 		C6301C3C15C208CF00E9E27F /* BridgeSupportController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301BFA15C208CF00E9E27F /* BridgeSupportController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6301C3D15C208CF00E9E27F /* class.js in Sources */ = {isa = PBXBuildFile; fileRef = C6301BFB15C208CF00E9E27F /* class.js */; };
 		C6301C3E15C208CF00E9E27F /* BurksPool.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301BFD15C208CF00E9E27F /* BurksPool.h */; };
 		C6301C3F15C208CF00E9E27F /* BurksPool.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301BFE15C208CF00E9E27F /* BurksPool.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C6301C4015C208CF00E9E27F /* GDataDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301BFF15C208CF00E9E27F /* GDataDefines.h */; };
@@ -60,7 +59,6 @@
 		C6301C6315C208CF00E9E27F /* JSCocoaLib.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301C2515C208CF00E9E27F /* JSCocoaLib.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C6301C6415C208CF00E9E27F /* JSCocoaPrivateObject.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301C2615C208CF00E9E27F /* JSCocoaPrivateObject.h */; };
 		C6301C6515C208CF00E9E27F /* JSCocoaPrivateObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301C2715C208CF00E9E27F /* JSCocoaPrivateObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6301C6615C208CF00E9E27F /* jslint-jscocoa.js in Sources */ = {isa = PBXBuildFile; fileRef = C6301C2815C208CF00E9E27F /* jslint-jscocoa.js */; };
 		C6301C6715C208CF00E9E27F /* KernelBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301C2915C208CF00E9E27F /* KernelBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C6301C6815C208CF00E9E27F /* KernelBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301C2A15C208CF00E9E27F /* KernelBridge.m */; };
 		C6301C6915C208CF00E9E27F /* TWBridgePageRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301C2B15C208CF00E9E27F /* TWBridgePageRegistry.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -87,7 +85,6 @@
 		C6301BF715C208CF00E9E27F /* TWBridgeURLRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWBridgeURLRequestManager.m; sourceTree = "<group>"; };
 		C6301BF915C208CF00E9E27F /* BridgeSupportController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeSupportController.h; sourceTree = "<group>"; };
 		C6301BFA15C208CF00E9E27F /* BridgeSupportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeSupportController.m; sourceTree = "<group>"; };
-		C6301BFB15C208CF00E9E27F /* class.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = class.js; sourceTree = "<group>"; };
 		C6301BFD15C208CF00E9E27F /* BurksPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BurksPool.h; sourceTree = "<group>"; };
 		C6301BFE15C208CF00E9E27F /* BurksPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BurksPool.m; sourceTree = "<group>"; };
 		C6301BFF15C208CF00E9E27F /* GDataDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataDefines.h; sourceTree = "<group>"; };
@@ -129,7 +126,6 @@
 		C6301C2515C208CF00E9E27F /* JSCocoaLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCocoaLib.m; sourceTree = "<group>"; };
 		C6301C2615C208CF00E9E27F /* JSCocoaPrivateObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCocoaPrivateObject.h; sourceTree = "<group>"; };
 		C6301C2715C208CF00E9E27F /* JSCocoaPrivateObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCocoaPrivateObject.m; sourceTree = "<group>"; };
-		C6301C2815C208CF00E9E27F /* jslint-jscocoa.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jslint-jscocoa.js"; sourceTree = "<group>"; };
 		C6301C2915C208CF00E9E27F /* KernelBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KernelBridge.h; sourceTree = "<group>"; };
 		C6301C2A15C208CF00E9E27F /* KernelBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KernelBridge.m; sourceTree = "<group>"; };
 		C6301C2B15C208CF00E9E27F /* TWBridgePageRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWBridgePageRegistry.h; sourceTree = "<group>"; };
@@ -239,7 +235,6 @@
 			children = (
 				C6301BF915C208CF00E9E27F /* BridgeSupportController.h */,
 				C6301BFA15C208CF00E9E27F /* BridgeSupportController.m */,
-				C6301BFB15C208CF00E9E27F /* class.js */,
 				C6301BFC15C208CF00E9E27F /* iPhone */,
 				C6301C1315C208CF00E9E27F /* JavaScriptCore */,
 				C6301C1D15C208CF00E9E27F /* JSCocoa.h */,
@@ -253,7 +248,6 @@
 				C6301C2515C208CF00E9E27F /* JSCocoaLib.m */,
 				C6301C2615C208CF00E9E27F /* JSCocoaPrivateObject.h */,
 				C6301C2715C208CF00E9E27F /* JSCocoaPrivateObject.m */,
-				C6301C2815C208CF00E9E27F /* jslint-jscocoa.js */,
 			);
 			path = JSCocoa;
 			sourceTree = "<group>";
@@ -429,7 +423,6 @@
 				C6301C3815C208CF00E9E27F /* AJAXConnection.m in Sources */,
 				C6301C3A15C208CF00E9E27F /* TWBridgeURLRequestManager.m in Sources */,
 				C6301C3C15C208CF00E9E27F /* BridgeSupportController.m in Sources */,
-				C6301C3D15C208CF00E9E27F /* class.js in Sources */,
 				C6301C3F15C208CF00E9E27F /* BurksPool.m in Sources */,
 				C6301C4215C208CF00E9E27F /* GDataXMLNode.m in Sources */,
 				C6301C4315C208CF00E9E27F /* ffi-iphone.c in Sources */,
@@ -445,7 +438,6 @@
 				C6301C6115C208CF00E9E27F /* JSCocoaFFIClosure.m in Sources */,
 				C6301C6315C208CF00E9E27F /* JSCocoaLib.m in Sources */,
 				C6301C6515C208CF00E9E27F /* JSCocoaPrivateObject.m in Sources */,
-				C6301C6615C208CF00E9E27F /* jslint-jscocoa.js in Sources */,
 				C6301C6815C208CF00E9E27F /* KernelBridge.m in Sources */,
 				C6301C6A15C208CF00E9E27F /* TWBridgePageRegistry.m in Sources */,
 				C6301C6C15C208CF00E9E27F /* WebViewController.m in Sources */,
