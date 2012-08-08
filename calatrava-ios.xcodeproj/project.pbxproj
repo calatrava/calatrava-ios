@@ -34,7 +34,6 @@
 		C6301C4A15C208CF00E9E27F /* ffitarget-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301C0B15C208CF00E9E27F /* ffitarget-iphone.h */; };
 		C6301C4B15C208CF00E9E27F /* ffitarget-iphonesimulator.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301C0C15C208CF00E9E27F /* ffitarget-iphonesimulator.h */; };
 		C6301C4C15C208CF00E9E27F /* ffitarget.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301C0D15C208CF00E9E27F /* ffitarget.h */; };
-		C6301C4D15C208CF00E9E27F /* iphone-sysv.S in Sources */ = {isa = PBXBuildFile; fileRef = C6301C0E15C208CF00E9E27F /* iphone-sysv.S */; };
 		C6301C4E15C208CF00E9E27F /* iphonesimulator-darwin.S in Sources */ = {isa = PBXBuildFile; fileRef = C6301C0F15C208CF00E9E27F /* iphonesimulator-darwin.S */; };
 		C6301C4F15C208CF00E9E27F /* prep_cif.c in Sources */ = {isa = PBXBuildFile; fileRef = C6301C1015C208CF00E9E27F /* prep_cif.c */; };
 		C6301C5015C208CF00E9E27F /* raw_api.c in Sources */ = {isa = PBXBuildFile; fileRef = C6301C1115C208CF00E9E27F /* raw_api.c */; };
@@ -101,7 +100,6 @@
 		C6301C0B15C208CF00E9E27F /* ffitarget-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ffitarget-iphone.h"; sourceTree = "<group>"; };
 		C6301C0C15C208CF00E9E27F /* ffitarget-iphonesimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ffitarget-iphonesimulator.h"; sourceTree = "<group>"; };
 		C6301C0D15C208CF00E9E27F /* ffitarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget.h; sourceTree = "<group>"; };
-		C6301C0E15C208CF00E9E27F /* iphone-sysv.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = "iphone-sysv.S"; sourceTree = "<group>"; };
 		C6301C0F15C208CF00E9E27F /* iphonesimulator-darwin.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = "iphonesimulator-darwin.S"; sourceTree = "<group>"; };
 		C6301C1015C208CF00E9E27F /* prep_cif.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = prep_cif.c; sourceTree = "<group>"; };
 		C6301C1115C208CF00E9E27F /* raw_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = raw_api.c; sourceTree = "<group>"; };
@@ -279,7 +277,6 @@
 				C6301C0B15C208CF00E9E27F /* ffitarget-iphone.h */,
 				C6301C0C15C208CF00E9E27F /* ffitarget-iphonesimulator.h */,
 				C6301C0D15C208CF00E9E27F /* ffitarget.h */,
-				C6301C0E15C208CF00E9E27F /* iphone-sysv.S */,
 				C6301C0F15C208CF00E9E27F /* iphonesimulator-darwin.S */,
 				C6301C1015C208CF00E9E27F /* prep_cif.c */,
 				C6301C1115C208CF00E9E27F /* raw_api.c */,
@@ -427,7 +424,6 @@
 				C6301C4215C208CF00E9E27F /* GDataXMLNode.m in Sources */,
 				C6301C4315C208CF00E9E27F /* ffi-iphone.c in Sources */,
 				C6301C4515C208CF00E9E27F /* ffi-iphonesimulator.c in Sources */,
-				C6301C4D15C208CF00E9E27F /* iphone-sysv.S in Sources */,
 				C6301C4E15C208CF00E9E27F /* iphonesimulator-darwin.S in Sources */,
 				C6301C4F15C208CF00E9E27F /* prep_cif.c in Sources */,
 				C6301C5015C208CF00E9E27F /* raw_api.c in Sources */,
