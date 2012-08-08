@@ -6,6 +6,8 @@
 //  Copyright 2008 __MyCompanyName__. All rights reserved.
 //
 
+
+#import "JavaScriptCore.h"
 #import "JavascriptCore-dlsym.h"
 
 

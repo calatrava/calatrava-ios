@@ -6,6 +6,8 @@
 //  Copyright 2008 __MyCompanyName__. All rights reserved.
 //
 
+#import "JavaScriptCore.h"
+
 #if !TARGET_IPHONE_SIMULATOR && !TARGET_OS_IPHONE
 #import <Cocoa/Cocoa.h>
 #import <JavaScriptCore/JavaScriptCore.h>
