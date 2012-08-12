@@ -52,7 +52,7 @@ static EmbeddedRuntime *nativeBridge = nil;
     
     // TODO: Load the embedded bridge
     [self loadJsFile:[NSString stringWithFormat:@"%@/embeddedBridge.js",
-                      [[[NSBundle mainBundle] bundlePath]]]];
+                      [[NSBundle mainBundle] bundlePath]]];
     
     nativeBridge = self;
   }
