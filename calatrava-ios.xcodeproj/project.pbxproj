@@ -66,6 +66,8 @@
 		C6301C6C15C208CF00E9E27F /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301C2F15C208CF00E9E27F /* WebViewController.m */; };
 		C6301C6D15C208CF00E9E27F /* WidgetController.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301C3115C208CF00E9E27F /* WidgetController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C6301C6E15C208CF00E9E27F /* WidgetController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301C3215C208CF00E9E27F /* WidgetController.m */; };
+		C632C7E215D5A6CB00203D4B /* EmbeddedRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = C632C7E015D5A6CB00203D4B /* EmbeddedRuntime.h */; };
+		C632C7E315D5A6CB00203D4B /* EmbeddedRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = C632C7E115D5A6CB00203D4B /* EmbeddedRuntime.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,6 +134,9 @@
 		C6301C2F15C208CF00E9E27F /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		C6301C3115C208CF00E9E27F /* WidgetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetController.h; sourceTree = "<group>"; };
 		C6301C3215C208CF00E9E27F /* WidgetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetController.m; sourceTree = "<group>"; };
+		C632C7E015D5A6CB00203D4B /* EmbeddedRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmbeddedRuntime.h; sourceTree = "<group>"; };
+		C632C7E115D5A6CB00203D4B /* EmbeddedRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmbeddedRuntime.m; sourceTree = "<group>"; };
+		C632C7E515D6E3CA00203D4B /* JsRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JsRuntime.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +218,9 @@
 				C6301C2A15C208CF00E9E27F /* KernelBridge.m */,
 				C6301C2B15C208CF00E9E27F /* TWBridgePageRegistry.h */,
 				C6301C2C15C208CF00E9E27F /* TWBridgePageRegistry.m */,
+				C632C7E015D5A6CB00203D4B /* EmbeddedRuntime.h */,
+				C632C7E115D5A6CB00203D4B /* EmbeddedRuntime.m */,
+				C632C7E515D6E3CA00203D4B /* JsRuntime.h */,
 			);
 			path = Bridge;
 			sourceTree = "<group>";
@@ -360,6 +368,7 @@
 				C6301C6015C208CF00E9E27F /* JSCocoaFFIClosure.h in Headers */,
 				C6301C6215C208CF00E9E27F /* JSCocoaLib.h in Headers */,
 				C6301C6415C208CF00E9E27F /* JSCocoaPrivateObject.h in Headers */,
+				C632C7E215D5A6CB00203D4B /* EmbeddedRuntime.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +447,7 @@
 				C6301C6A15C208CF00E9E27F /* TWBridgePageRegistry.m in Sources */,
 				C6301C6C15C208CF00E9E27F /* WebViewController.m in Sources */,
 				C6301C6E15C208CF00E9E27F /* WidgetController.m in Sources */,
+				C632C7E315D5A6CB00203D4B /* EmbeddedRuntime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

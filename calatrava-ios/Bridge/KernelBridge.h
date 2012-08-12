@@ -1,8 +1,14 @@
 #import <Foundation/Foundation.h>
+#import "JsRuntime.h"
 
 @interface KernelBridge : NSObject
+{
+  id<JsRuntime> jsRt;
+}
 
-+ (void)startWith:(UINavigationController *)root;
-+ (void)launch:(NSString *)flow;
++ (KernelBridge *)sharedKernel;
+
+- (void)startWith:(UINavigationController *)root;
+- (void)launch:(NSString *)flow;
 
 @end

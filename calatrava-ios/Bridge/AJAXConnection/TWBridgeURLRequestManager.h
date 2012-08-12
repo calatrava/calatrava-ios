@@ -1,16 +1,17 @@
 #import <Foundation/Foundation.h>
 
 #import "AJAXConnection.h"
+#import "JsRuntime.h"
 
-@interface TWBridgeURLRequestManager : NSObject<AJAXConnectionDelegate>
+@interface TWBridgeURLRequestManager : NSObject<JsRtRequestDelegate, AJAXConnectionDelegate>
 {
+  id<JsRuntime> jsRt;
   NSMutableDictionary *outstandingConnections;
+  UINavigationController *root;
 }
 
 + (TWBridgeURLRequestManager *)sharedManager;
 
-@property (nonatomic, retain) UINavigationController *root;
-
-- (id)requestFrom:(NSString *)requestId url:(NSString *)url as:(NSString *)method with:(NSString *)body andHeaders:(NSDictionary *)headers;
+- (id)attachToRuntime:(id<JsRuntime>)rt under:(UINavigationController *)newRoot;
 
 @end

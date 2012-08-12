@@ -1,12 +1,8 @@
 #import "TWBridgeURLRequestManager.h"
 
-#include "JSCocoaController.h"
-
 static TWBridgeURLRequestManager *bridge_instance = nil;
 
 @implementation TWBridgeURLRequestManager
-
-@synthesize root;
 
 + (TWBridgeURLRequestManager *)sharedManager
 {
@@ -26,9 +22,26 @@ static TWBridgeURLRequestManager *bridge_instance = nil;
   return self;
 }
 
-- (id)requestFrom:(NSString *)requestId url:(NSString *)url as:(NSString *)method with:(NSString *)body andHeaders:(NSDictionary *)headers
+- (id)attachToRuntime:(id<JsRuntime>)rt under:(UINavigationController *)newRoot
 {
-  AJAXConnection *outgoing = [[AJAXConnection alloc] initWithRequestId:requestId url:url root:root andHeaders:headers];
+  jsRt = rt;
+  root = newRoot;
+  
+  [jsRt setRequestDelegate:self];
+  
+  return self;
+}
+
+- (id)requestFrom:(NSString *)requestId
+              url:(NSString *)url
+               as:(NSString *)method
+             with:(NSString *)body
+       headers:(NSDictionary *)headers
+{
+  AJAXConnection *outgoing = [[AJAXConnection alloc] initWithRequestId:requestId
+                                                                   url:url
+                                                                  root:root
+                                                            andHeaders:headers];
   
   [outstandingConnections setObject:outgoing forKey:requestId];
   [outgoing setHttpMethod:method];
@@ -44,15 +57,15 @@ static TWBridgeURLRequestManager *bridge_instance = nil;
 
 - (void)receivedData:(NSString*)data from:(NSString *)requestId
 {
-  [[JSCocoaController sharedController] callJSFunctionNamed:@"bridgeSuccessfulResponse"
-                                              withArguments:requestId, data, nil];
+  [jsRt callJsFunction:@"bridgeSuccessfulResponse"
+              withArgs:@[requestId, data]];
   [outstandingConnections removeObjectForKey:requestId];
 }
 
 - (void)failedWithError:(NSError*)error from:(NSString *)requestId
 {
-  [[JSCocoaController sharedController] callJSFunctionNamed:@"bridgeFailureResponse"
-                                              withArguments:requestId, [NSNumber numberWithInt:400], @"Failed.", nil];
+  [jsRt callJsFunction:@"bridgeFailureResponse"
+              withArgs:@[requestId, [NSNumber numberWithInt:400], @"Failed."]];
   [outstandingConnections removeObjectForKey:requestId];
 }
 

@@ -1,5 +1,4 @@
 #import "BaseUIViewController.h"
-#import "JSCocoaController.h"
 #import "TWBridgePageRegistry.h"
 
 @implementation BaseUIViewController
@@ -32,13 +31,7 @@
 {
   NSString *proxyId = [handlers objectForKey:event];
   if (proxyId) {
-    NSMutableArray *eventDescriptor = [NSMutableArray arrayWithCapacity:2];
-    [eventDescriptor addObject:proxyId];
-    [eventDescriptor addObject:event];
-    [eventDescriptor addObjectsFromArray:args];
-    
-    [[JSCocoa sharedController] callJSFunctionNamed:@"bridgeDispatch"
-                                 withArgumentsArray:eventDescriptor];
+    [[TWBridgePageRegistry sharedRegistry] dispatchEvent:event fromProxy:proxyId withArgs:args];
   }
   return self;
 }

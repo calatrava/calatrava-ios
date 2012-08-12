@@ -1,5 +1,4 @@
 #import "TWBridgePageRegistry.h"
-#include "JSCocoaController.h"
 
 static TWBridgePageRegistry *bridge_instance = nil;
 
@@ -11,7 +10,7 @@ static TWBridgePageRegistry *bridge_instance = nil;
 
 @implementation TWBridgePageRegistry
 
-@synthesize root, currentPage;
+@synthesize currentPage;
 
 + (TWBridgePageRegistry *)sharedRegistry
 {
@@ -34,13 +33,37 @@ static TWBridgePageRegistry *bridge_instance = nil;
   return self;
 }
 
-- (id)registerProxyId:(NSString *)proxyId forPageNamed:(NSString *)name
+- (id)attachToRuntime:(id<JsRuntime>)rt under:(UINavigationController *)newRoot
+{
+  jsRt = rt;
+  root = newRoot;
+  
+  [jsRt setPageDelegate:self];
+  [jsRt setTimerDelegate:self];
+  
+  return self;
+}
+
+- (id)dispatchEvent:(NSString *)event fromProxy:(NSString *)proxyId withArgs:(NSArray *)args
+{
+  NSMutableArray *eventDescriptor = [NSMutableArray arrayWithCapacity:2];
+  [eventDescriptor addObject:proxyId];
+  [eventDescriptor addObject:event];
+  [eventDescriptor addObjectsFromArray:args];
+  
+  [jsRt callJsFunction:@"bridgeDispatch"
+              withArgs:eventDescriptor];
+
+  return self;
+}
+
+- (id)registerProxy:(NSString *)proxyId forPage:(NSString *)name
 {
   [pageProxyIds setObject:[self convertPageNameToClassName:name] forKey:proxyId];
   return self;
 }
 
-- (id)attachHandler:(NSString *)proxyId forEvent:(NSString *)name
+- (id)attachHandlerTo:(NSString *)proxyId forEvent:(NSString *)name
 {
   id pageObject = [self ensurePageWithProxyId:proxyId];
   
@@ -48,23 +71,17 @@ static TWBridgePageRegistry *bridge_instance = nil;
   return self;
 }
 
-- (id)valueForField:(NSString *)name onProxy:(NSString *)proxyId
+- (id)valueFrom:(NSString *)proxy forField:(NSString *)field
 {
-  BaseUIViewController *pageObject = [self ensurePageWithProxyId:proxyId];
+  BaseUIViewController *pageObject = [self ensurePageWithProxyId:proxy];
   
-  return [pageObject valueForField:name];
+  return [pageObject valueForField:field];
 }
 
-- (id)render:(JSValueRefAndContextRef)jsViewObject onProxy:(NSString *)proxyId
+- (id)render:(NSString *)proxy with:(NSDictionary *)dataMsg
 {
-  BaseUIViewController *pageObject = [self ensurePageWithProxyId:proxyId];
-  
-  NSObject* objectFromJavascript = nil;
-  [JSCocoaFFIArgument unboxJSValueRef:jsViewObject.value
-                             toObject:&objectFromJavascript
-                            inContext:jsViewObject.ctx];
-  
-  [pageObject render:(NSDictionary *)objectFromJavascript];
+  BaseUIViewController *pageObject = [self ensurePageWithProxyId:proxy];
+  [pageObject render:dataMsg];
   return self;
 }
 
@@ -79,8 +96,8 @@ static TWBridgePageRegistry *bridge_instance = nil;
   NSMutableArray *_args = [[NSMutableArray alloc] init];
   [_args addObject:widget];
   [_args addObjectsFromArray:arguments];
-  [[JSCocoa sharedController] callJSFunctionNamed:@"bridgeInvokeCallback"
-                               withArgumentsArray:_args];
+  [jsRt callJsFunction:@"bridgeInvokeCallback"
+              withArgs:_args];
 
   return self;
 }
@@ -91,31 +108,26 @@ static TWBridgePageRegistry *bridge_instance = nil;
   return self;
 }
 
-- (id)changePage:(NSString *)target
+- (id)changeToPage:(NSString *)target
 {
-    NSLog(@"Change Page to: %@", target);
-    currentPage = [self ensurePageWithName:target];
+  NSLog(@"Change to Page: %@", target);
+  currentPage = [self ensurePageWithName:target];
 
-    [currentPage scrollToTop];
+  [currentPage scrollToTop];
 
-    if([[root viewControllers] containsObject:currentPage]) {
-        [root popToViewController:currentPage animated:YES];
-    } else{
-        [root pushViewController:currentPage animated:YES];
-    }
+  if([[root viewControllers] containsObject:currentPage]) {
+    [root popToViewController:currentPage animated:YES];
+  } else{
+    [root pushViewController:currentPage animated:YES];
+  }
 
-    return self;
+  return self;
 }
 
 - (void)alert:(NSString *)message
 {
   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
   [alert show];
-}
-
-- (void)nslog:(NSString *)message
-{
-  NSLog(@"Bridge log: %@", message);
 }
 
 - (void)openUrl:(NSString *)url
@@ -127,8 +139,8 @@ static TWBridgePageRegistry *bridge_instance = nil;
 {
   NSString *timerId = (NSString *)[theTimer userInfo];
   NSLog(@"Firing timer %@", timerId);
-  [[JSCocoaController sharedController] callJSFunctionNamed:@"bridgeFireTimer"
-                                              withArguments:timerId, nil];
+  [jsRt callJsFunction:@"bridgeFireTimer"
+              withArgs:@[timerId]];
 }
 
 - (void)startTimer:(NSString *)timerId timeout:(int)timeout

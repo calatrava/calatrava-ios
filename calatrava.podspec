@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "calatrava"
-  s.version      = "0.0.7"
+  s.version      = "0.0.8"
   s.summary      = "See https://github.com/calatrava/calatrava."
   s.description  = <<-DESC
                     Calatrava is a framework for developing cross-platform mobile
@@ -16,12 +16,14 @@ Pod::Spec.new do |s|
   s.license      = 'Apache (2.0)'
 
   s.author       = { "Giles Alexander" => "gga@thoughtworks.com" }
-  s.source       = { :git => "https://github.com/calatrava/calatrava-ios.git", :tag => "0.0.7" }
+  s.source       = { :git => "https://github.com/calatrava/calatrava-ios.git", :tag => "0.0.8" }
   s.platform     = :ios, '5.0'
 
   s.source_files = 'calatrava-ios/**/*.{h,m,c}'
+  s.resources    = ['calatrava-ios/Bridge/embeddedBridge.js']
 
   s.framework    = 'Foundation'
   s.library      = 'xml2'
+  s.require_arc  = true
   s.xcconfig     = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2' }
 end
