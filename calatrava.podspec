@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.license      = 'Apache (2.0)'
 
   s.author       = { "Giles Alexander" => "gga@thoughtworks.com" }
-  s.source       = { :git => "https://github.com/calatrava/calatrava-ios.git" }
+  s.source       = { :git => "https://github.com/calatrava/calatrava-ios.git", :tag => "0.0.8" }
   s.platform     = :ios, '5.0'
 
   s.source_files = 'calatrava-ios/**/*.{h,m,c}'
