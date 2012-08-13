@@ -68,6 +68,8 @@
 		C6301C6E15C208CF00E9E27F /* WidgetController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301C3215C208CF00E9E27F /* WidgetController.m */; };
 		C632C7E215D5A6CB00203D4B /* EmbeddedRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = C632C7E015D5A6CB00203D4B /* EmbeddedRuntime.h */; };
 		C632C7E315D5A6CB00203D4B /* EmbeddedRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = C632C7E115D5A6CB00203D4B /* EmbeddedRuntime.m */; };
+		C6C851A815D88AB900445924 /* WebRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = C6C851A615D88AB900445924 /* WebRuntime.h */; };
+		C6C851A915D88AB900445924 /* WebRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C851A715D88AB900445924 /* WebRuntime.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -137,6 +139,8 @@
 		C632C7E015D5A6CB00203D4B /* EmbeddedRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmbeddedRuntime.h; sourceTree = "<group>"; };
 		C632C7E115D5A6CB00203D4B /* EmbeddedRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmbeddedRuntime.m; sourceTree = "<group>"; };
 		C632C7E515D6E3CA00203D4B /* JsRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JsRuntime.h; sourceTree = "<group>"; };
+		C6C851A615D88AB900445924 /* WebRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebRuntime.h; sourceTree = "<group>"; };
+		C6C851A715D88AB900445924 /* WebRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebRuntime.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +225,8 @@
 				C632C7E015D5A6CB00203D4B /* EmbeddedRuntime.h */,
 				C632C7E115D5A6CB00203D4B /* EmbeddedRuntime.m */,
 				C632C7E515D6E3CA00203D4B /* JsRuntime.h */,
+				C6C851A615D88AB900445924 /* WebRuntime.h */,
+				C6C851A715D88AB900445924 /* WebRuntime.m */,
 			);
 			path = Bridge;
 			sourceTree = "<group>";
@@ -369,6 +375,7 @@
 				C6301C6215C208CF00E9E27F /* JSCocoaLib.h in Headers */,
 				C6301C6415C208CF00E9E27F /* JSCocoaPrivateObject.h in Headers */,
 				C632C7E215D5A6CB00203D4B /* EmbeddedRuntime.h in Headers */,
+				C6C851A815D88AB900445924 /* WebRuntime.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +455,7 @@
 				C6301C6C15C208CF00E9E27F /* WebViewController.m in Sources */,
 				C6301C6E15C208CF00E9E27F /* WidgetController.m in Sources */,
 				C632C7E315D5A6CB00203D4B /* EmbeddedRuntime.m in Sources */,
+				C6C851A915D88AB900445924 /* WebRuntime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

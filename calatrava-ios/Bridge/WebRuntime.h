@@ -1,10 +1,11 @@
 #import <Foundation/Foundation.h>
 #import "JsRuntime.h"
-#import "JSCocoaController.h"
 
-@interface EmbeddedRuntime : NSObject<JsRuntime>
+#import <UIKit/UIKit.h>
+
+@interface WebRuntime : NSObject<JsRuntime, UIWebViewDelegate>
 {
-  JSCocoaController *jsCore;
+  UIWebView *rtWebView;
   id<JsRtPageDelegate> pageDelegate;
   id<JsRtTimerDelegate> timerDelegate;
   id<JsRtRequestDelegate> requestDelegate;

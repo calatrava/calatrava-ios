@@ -1,5 +1,6 @@
 #import "KernelBridge.h"
 #import "EmbeddedRuntime.h"
+#import "WebRuntime.h"
 #include "TWBridgePageRegistry.h"
 #include "TWBridgeURLRequestManager.h"
 
@@ -20,7 +21,8 @@ static KernelBridge *kernel = nil;
 {
   if (self = [super init])
   {
-    jsRt = [[EmbeddedRuntime alloc] init];
+//    jsRt = [[EmbeddedRuntime alloc] init];
+    jsRt = [[WebRuntime alloc] init];
   }
   return self;
 }
