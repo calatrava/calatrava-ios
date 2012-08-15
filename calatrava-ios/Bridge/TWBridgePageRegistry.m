@@ -130,9 +130,10 @@ static TWBridgePageRegistry *bridge_instance = nil;
   [alert show];
 }
 
-- (void)openUrl:(NSString *)url
+- (id)openUrl:(NSString *)url
 {
   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+  return self;
 }
 
 - (void)timerFired:(NSTimer*)theTimer
@@ -143,13 +144,14 @@ static TWBridgePageRegistry *bridge_instance = nil;
               withArgs:@[timerId]];
 }
 
-- (void)startTimer:(NSString *)timerId timeout:(int)timeout
+- (id)startTimer:(NSString *)timerId timeout:(int)timeout
 {
   [NSTimer scheduledTimerWithTimeInterval:timeout
                                    target:self
                                  selector:@selector(timerFired:)
                                  userInfo:timerId
                                   repeats:NO];
+  return self;
 }
 
 - (void)displayDialog:(NSString *)dialogName

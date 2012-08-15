@@ -1,5 +1,4 @@
 #import "KernelBridge.h"
-#import "EmbeddedRuntime.h"
 #import "WebRuntime.h"
 #include "TWBridgePageRegistry.h"
 #include "TWBridgeURLRequestManager.h"

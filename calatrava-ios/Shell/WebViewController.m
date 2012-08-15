@@ -18,6 +18,12 @@
     return self;
 }
 
+- (NSString *)pageName
+{
+  // No-op implementation. Override in sub class
+  return @"OVERRIDE pageName IN SUB-CLASS";
+}
+
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];

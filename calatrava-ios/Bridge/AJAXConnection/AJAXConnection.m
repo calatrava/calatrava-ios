@@ -12,13 +12,13 @@
 @implementation AJAXConnection
 @synthesize delegate;
 
-- (AJAXConnection *)initWithRequestId:(NSString*)requestId url:(NSString *)url root:(UINavigationController *)root andHeaders:(NSDictionary *)headers
+- (AJAXConnection *)initWithRequestId:(NSString*)requestId url:(NSString *)url root:(UINavigationController *)newRoot andHeaders:(NSDictionary *)headers
 {
     NSLog(@"[CM] url: %@", url);
     self = [super init];
     if (self)
     {
-        self->root = root;
+        self->root = newRoot;
         reqId = requestId;
         request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]
                                                cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
