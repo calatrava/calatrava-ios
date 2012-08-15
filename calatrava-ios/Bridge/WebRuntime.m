@@ -19,7 +19,8 @@
   {
     rtWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0, 0.0, 100.0, 100.0)];
     
-    isLoading = YES;
+    isLoadingHtml = YES;
+    outstandingScriptLoads = 0;
     filesToLoad = [[NSMutableArray alloc] init];
     functionsToCall = [[NSMutableArray alloc] init];
     [rtWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/webRuntime.html", [[NSBundle mainBundle] bundlePath]]]]];
@@ -30,22 +31,21 @@
 
 - (void)loadJsFile:(NSString *)path
 {
-  if (isLoading)
+  if (isLoadingHtml)
   {
     [filesToLoad addObject:path];
   }
   else
   {
     NSLog(@"Loading: %@", path);
+    ++outstandingScriptLoads;
     NSString *loadOut = [rtWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.tw.bridge.native.load('%@');", path]];
-    NSLog(@"isLoading: %d", [rtWebView isLoading]);
-    NSLog(@"Ouput: %@", loadOut);
   }
 }
 
 - (void)callJsFunction:(NSString *)function withArgs:(NSArray *)args
 {
-  if (isLoading)
+  if (isLoadingHtml || outstandingScriptLoads > 0)
   {
     NSArray *storeArgs = args == nil ? [NSArray array] : args;
     [functionsToCall addObject:@{ @"function" : function,
@@ -61,21 +61,16 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-  isLoading = YES;
+  isLoadingHtml = YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-  isLoading = NO;
+  isLoadingHtml = NO;
   for (NSString *file in filesToLoad) {
     [self loadJsFile:file];
   }
   [filesToLoad removeAllObjects];
-  for (NSDictionary *call in functionsToCall) {
-    [self callJsFunction:[call objectForKey:@"function"]
-                withArgs:[call objectForKey:@"args"]];
-  }
-  [functionsToCall removeAllObjects];
 }
 
 -            (BOOL)webView:(UIWebView *)webView
@@ -119,6 +114,15 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
       [timerDelegate startTimer:[args objectAtIndex:0] timeout:[[args objectAtIndex:1] integerValue]];
     } else if ([function isEqualToString:@"openUrl"]) {
       [uiDelegate openUrl:[args objectAtIndex:0]];
+    } else if ([function isEqualToString:@"loadComplete"]) {
+      --outstandingScriptLoads;
+      if (outstandingScriptLoads == 0) {
+        for (NSDictionary *call in functionsToCall) {
+          [self callJsFunction:[call objectForKey:@"function"]
+                      withArgs:[call objectForKey:@"args"]];
+        }
+        [functionsToCall removeAllObjects];
+      }
     } else {
       NSLog(@"Unknown function call!");
     }

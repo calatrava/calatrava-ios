@@ -48,8 +48,13 @@ tw.bridge.native = {
     var scriptEl = document.createElement('script');
     scriptEl.type = "text/javascript";
     scriptEl.src = path;
+    scriptEl.onload = tw.bridge.native.loadComplete;
     document.body.appendChild(scriptEl);
     return "successful load of '" + path + "'";
+  },
+  
+  loadComplete: function() {
+    tw.bridge.native.call('loadComplete');
   }
   
 };
