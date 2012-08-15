@@ -1,5 +1,11 @@
 #import "WebRuntime.h"
 
+@interface WebRuntime()
+
+- (NSString *)argsToString:(NSArray *)args;
+
+@end
+
 @implementation WebRuntime
 
 @synthesize pageDelegate;
@@ -13,6 +19,9 @@
   {
     rtWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0, 0.0, 100.0, 100.0)];
     
+    isLoading = YES;
+    filesToLoad = [[NSMutableArray alloc] init];
+    functionsToCall = [[NSMutableArray alloc] init];
     [rtWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/webRuntime.html", [[NSBundle mainBundle] bundlePath]]]]];
     [rtWebView setDelegate:self];
   }
@@ -21,13 +30,52 @@
 
 - (void)loadJsFile:(NSString *)path
 {
-  [rtWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"tw.bridge.native.load('%@');", path]];
+  if (isLoading)
+  {
+    [filesToLoad addObject:path];
+  }
+  else
+  {
+    NSLog(@"Loading: %@", path);
+    NSString *loadOut = [rtWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.tw.bridge.native.load('%@');", path]];
+    NSLog(@"isLoading: %d", [rtWebView isLoading]);
+    NSLog(@"Ouput: %@", loadOut);
+  }
 }
 
 - (void)callJsFunction:(NSString *)function withArgs:(NSArray *)args
 {
-  NSString *arg = [args componentsJoinedByString:@", "];
-  [rtWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@(%@);", function, arg]];
+  if (isLoading)
+  {
+    NSArray *storeArgs = args == nil ? [NSArray array] : args;
+    [functionsToCall addObject:@{ @"function" : function,
+     @"args" : storeArgs }];
+  }
+  else
+  {
+    NSString *funcCall = [NSString stringWithFormat:@"%@(%@);", function, [self argsToString:args]];
+    NSString *returnVal = [rtWebView stringByEvaluatingJavaScriptFromString:funcCall];
+    NSLog(@"Function '%@' returned: %@", funcCall, returnVal);
+  }
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+  isLoading = YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+  isLoading = NO;
+  for (NSString *file in filesToLoad) {
+    [self loadJsFile:file];
+  }
+  [filesToLoad removeAllObjects];
+  for (NSDictionary *call in functionsToCall) {
+    [self callJsFunction:[call objectForKey:@"function"]
+                withArgs:[call objectForKey:@"args"]];
+  }
+  [functionsToCall removeAllObjects];
 }
 
 -            (BOOL)webView:(UIWebView *)webView
@@ -40,8 +88,9 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
   NSLog(@"Web RT loading: %@", requestString);
   if ([requestString hasPrefix:funcPrefix])
   {
-    NSString *function = [requestString substringFromIndex:[funcPrefix length]];
-    NSString *argsJson = [rtWebView stringByEvaluatingJavaScriptFromString:@"tw.bridge.native.getArgs();"];
+    NSArray *functionAndArgs = [[requestString substringFromIndex:[funcPrefix length]] componentsSeparatedByString:@"&"];
+    NSString *function = [functionAndArgs objectAtIndex:0];
+    NSString *argsJson = [rtWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"tw.bridge.native.getArgs('%@');", [functionAndArgs objectAtIndex:1]]];
     NSLog(@"Targeting: %@", function);
     NSLog(@"With args: %@", argsJson);
     NSArray *args = (NSArray *)[NSJSONSerialization JSONObjectWithData:[argsJson dataUsingEncoding:NSASCIIStringEncoding]
@@ -57,7 +106,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     } else if ([function isEqualToString:@"attachProxyEventHandler"]) {
       [pageDelegate attachHandlerTo:[args objectAtIndex:0] forEvent:[args objectAtIndex:1]];
     } else if ([function isEqualToString:@"renderProxy"]) {
-      [pageDelegate render:[args objectAtIndex:0] with:[args objectAtIndex:1]];
+      [pageDelegate render:[args objectAtIndex:1] with:[args objectAtIndex:0]];
     } else if ([function isEqualToString:@"valueOfProxyField"]) {
       [pageDelegate valueFrom:[args objectAtIndex:0] forField:[args objectAtIndex:1]];
     } else if ([function isEqualToString:@"issueRequest"]) {
@@ -73,14 +122,36 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     } else {
       NSLog(@"Unknown function call!");
     }
+    return NO;
   }
   else
   {
-    NSLog(@"Unknown RT load cancelled.");
+    if (![requestString hasSuffix:@"webRuntime.html"]) {
+      NSLog(@"Unknown RT load cancelled.");
+      return NO;
+    } else {
+      return YES;
+    }
+  }
+}
+
+- (NSString *)argsToString:(NSArray *)args
+{
+  NSMutableArray *formattedArgs = [[NSMutableArray alloc] initWithCapacity:[args count]];
+  for (id arg in args)
+  {
+    NSString *formatted;
+    if ([arg isKindOfClass:[NSString class]]) {
+      formatted = [NSString stringWithFormat:@"\"%@\"", arg];
+    } else if ([arg isKindOfClass:[NSNumber class]]) {
+      formatted = arg;
+    } else if ([arg isKindOfClass:[NSDictionary class]] || [arg isKindOfClass:[NSArray class]]) {
+      formatted = [NSString stringWithUTF8String:[[NSJSONSerialization dataWithJSONObject:arg options:0 error:nil] bytes]];
+    }
+    [formattedArgs addObject:formatted];
   }
   
-  // Always cancel the location change
-  return NO;
+  return [formattedArgs componentsJoinedByString:@", "];
 }
 
 @end

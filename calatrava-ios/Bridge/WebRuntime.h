@@ -6,6 +6,10 @@
 @interface WebRuntime : NSObject<JsRuntime, UIWebViewDelegate>
 {
   UIWebView *rtWebView;
+  BOOL isLoading;
+  NSMutableArray *filesToLoad;
+  NSMutableArray *functionsToCall;
+  
   id<JsRtPageDelegate> pageDelegate;
   id<JsRtTimerDelegate> timerDelegate;
   id<JsRtRequestDelegate> requestDelegate;
