@@ -88,7 +88,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     NSString *argsJson = [rtWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"tw.bridge.native.getArgs('%@');", [functionAndArgs objectAtIndex:1]]];
     NSLog(@"Targeting: %@", function);
     NSLog(@"With args: %@", argsJson);
-    NSArray *args = (NSArray *)[NSJSONSerialization JSONObjectWithData:[argsJson dataUsingEncoding:NSASCIIStringEncoding]
+    NSArray *args = (NSArray *)[NSJSONSerialization JSONObjectWithData:[argsJson dataUsingEncoding:NSUTF8StringEncoding]
                                                                options:0
                                                                  error:nil];
     
@@ -150,7 +150,11 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     } else if ([arg isKindOfClass:[NSNumber class]]) {
       formatted = arg;
     } else if ([arg isKindOfClass:[NSDictionary class]] || [arg isKindOfClass:[NSArray class]]) {
-      formatted = [NSString stringWithUTF8String:[[NSJSONSerialization dataWithJSONObject:arg options:0 error:nil] bytes]];
+      NSError *err;
+      NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arg options:0 error:&err];
+      formatted = [[NSString alloc] initWithBytes:[jsonData bytes]
+                                                        length:[jsonData length]
+                                                      encoding:NSUTF8StringEncoding];
     }
     [formattedArgs addObject:formatted];
   }
