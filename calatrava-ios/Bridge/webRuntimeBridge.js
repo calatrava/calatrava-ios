@@ -73,7 +73,7 @@ calatrava.bridge.runtime = {
     // Delete any keys that have a null value to avoid the Obj-C JSON
     // serialization failure
     if (viewObject != undefined) {
-      cleanValues(viewObject);
+      calatrava.bridge.support.cleanValues(viewObject);
     }
 
     calatrava.bridge.native.call("renderProxy", viewObject, proxyId);
@@ -118,7 +118,7 @@ calatrava.bridge.support = {
         jsObject[key] = 0;
       } else {
         if (jsObject[key] instanceof Object) {
-          cleanValues(jsObject[key]);
+          calatrava.bridge.support.cleanValues(jsObject[key]);
         }
       }
     });

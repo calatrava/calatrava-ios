@@ -85,7 +85,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
   {
     NSArray *functionAndArgs = [[requestString substringFromIndex:[funcPrefix length]] componentsSeparatedByString:@"&"];
     NSString *function = [functionAndArgs objectAtIndex:0];
-    NSString *argsJson = [rtWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"tw.bridge.native.getArgs('%@');", [functionAndArgs objectAtIndex:1]]];
+    NSString *argsJson = [rtWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"calatrava.bridge.native.getArgs('%@');", [functionAndArgs objectAtIndex:1]]];
     NSLog(@"Targeting: %@", function);
     NSLog(@"With args: %@", argsJson);
     NSArray *args = (NSArray *)[NSJSONSerialization JSONObjectWithData:[argsJson dataUsingEncoding:NSUTF8StringEncoding]
