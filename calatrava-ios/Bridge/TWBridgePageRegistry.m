@@ -51,7 +51,7 @@ static TWBridgePageRegistry *bridge_instance = nil;
   [eventDescriptor addObject:event];
   [eventDescriptor addObjectsFromArray:args];
   
-  [jsRt callJsFunction:@"bridgeDispatch"
+  [jsRt callJsFunction:@"calatrava.inbound.dispatchEvent"
               withArgs:eventDescriptor];
 
   return self;
@@ -98,7 +98,7 @@ static TWBridgePageRegistry *bridge_instance = nil;
   NSMutableArray *_args = [[NSMutableArray alloc] init];
   [_args addObject:widget];
   [_args addObjectsFromArray:arguments];
-  [jsRt callJsFunction:@"bridgeInvokeCallback"
+  [jsRt callJsFunction:@"calatrava.inbound.invokeCallback"
               withArgs:_args];
 
   return self;

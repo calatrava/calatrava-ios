@@ -57,14 +57,14 @@ static TWBridgeURLRequestManager *bridge_instance = nil;
 
 - (void)receivedData:(NSString*)data from:(NSString *)requestId
 {
-  [jsRt callJsFunction:@"bridgeSuccessfulResponse"
+  [jsRt callJsFunction:@"calatrava.inbound.successfulResponse"
               withArgs:@[requestId, data]];
   [outstandingConnections removeObjectForKey:requestId];
 }
 
 - (void)failedWithError:(NSError*)error from:(NSString *)requestId
 {
-  [jsRt callJsFunction:@"bridgeFailureResponse"
+  [jsRt callJsFunction:@"calatrava.inbound.failureResponse"
               withArgs:@[requestId, [NSNumber numberWithInt:400], @"Failed."]];
   [outstandingConnections removeObjectForKey:requestId];
 }

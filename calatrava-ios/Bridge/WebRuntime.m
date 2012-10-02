@@ -39,7 +39,7 @@
   {
     NSLog(@"Loading: %@", path);
     ++outstandingScriptLoads;
-    [rtWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.tw.bridge.native.load('%@');", path]];
+    [rtWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"calatrava.bridge.native.load('%@');", path]];
   }
 }
 

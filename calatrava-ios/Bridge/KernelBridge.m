@@ -35,7 +35,7 @@ static KernelBridge *kernel = nil;
   
   // Load js bridge
   [jsRt loadJsFile:[NSString stringWithFormat:@"%@/public/assets/scripts/env.js", bundle]];
-  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/public/assets/scripts/bridge.js", bundle]];
+  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/public/assets/scripts/calatrava.js", bundle]];
   NSString *loadFileText = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/public/assets/load_file.text", bundle]
                                                      encoding:NSASCIIStringEncoding
                                                         error:nil];
