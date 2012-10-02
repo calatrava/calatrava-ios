@@ -1,7 +1,7 @@
-var tw = tw || {};
-tw.bridge = tw.bridge || {};
+var calatrava = calatrava || {};
+calatrava.bridge = calatrava.bridge || {};
 
-tw.bridge.args = (function() {
+calatrava.bridge.args = (function() {
   var nextArgId = 0, argStore = {};
 
   var store = function(argArray) {
@@ -25,16 +25,16 @@ tw.bridge.args = (function() {
   };
 }());
 
-tw.bridge.native = {
+calatrava.bridge.native = {
 
   getArgs: function(argId) {
-    return JSON.stringify(tw.bridge.args.retrieve(argId));
+    return JSON.stringify(calatrava.bridge.args.retrieve(argId));
   },
 
   call: function(target) {
-    var argId = tw.bridge.args.store(_.toArray(arguments).slice(1));
+    var argId = calatrava.bridge.args.store(_.toArray(arguments).slice(1));
     var callFrame = document.createElement('iframe');
-    callFrame.setAttribute('id', 'callback_iframe');
+    callFrame.setAttribute('id', 'callback_iframe' + argId);
     callFrame.setAttribute('style', 'display:none;');
     callFrame.setAttribute('height', '0px');
     callFrame.setAttribute('width', '0px');
@@ -42,26 +42,45 @@ tw.bridge.native = {
     callFrame.setAttribute('src', 'native-call:' + target + '&' + argId);
 
     document.documentElement.appendChild(callFrame);
+    document.documentElement.removeChild(callFrame);
   },
 
   load: function(path) {
     var scriptEl = document.createElement('script');
     scriptEl.type = "text/javascript";
     scriptEl.src = path;
-    scriptEl.onload = tw.bridge.native.loadComplete;
+    scriptEl.onload = calatrava.bridge.native.loadComplete;
     document.body.appendChild(scriptEl);
     return "successful load of '" + path + "'";
   },
   
   loadComplete: function() {
-    tw.bridge.native.call('loadComplete');
+    calatrava.bridge.native.call('loadComplete');
   }
   
 };
 
-tw.bridge.runtime = {
+calatrava.bridge.runtime = {
+  renderProxy: function(viewObject, proxyId) {
+    // Clean off properties that cause problems when marshalling
+    if (viewObject.hasOwnProperty('toJSONString')) {
+      viewObject.toJSONString = null;
+    }
+    if (viewObject.hasOwnProperty('parseJSON')) {
+      viewObject.parseJSON = null;
+    }
+
+    // Delete any keys that have a null value to avoid the Obj-C JSON
+    // serialization failure
+    if (viewObject != undefined) {
+      cleanValues(viewObject);
+    }
+
+    calatrava.bridge.native.call("renderProxy", viewObject, proxyId);
+  },
+
   issueRequest: function(options) {
-    tw.bridge.native.call("issueRequest",
+    calatrava.bridge.native.call("issueRequest",
       options.requestId,
       options.url,
       options.method,
@@ -75,7 +94,6 @@ var methods = ["log",
   "changePage",
   "registerProxyForPage",
   "attachProxyEventHandler",
-  "renderProxy",
   "valueOfProxyField",
   "startTimerWithTimeout",
   "openUrl"];
@@ -83,10 +101,26 @@ var methods = ["log",
 for (m in methods) {
   if (methods.hasOwnProperty(m)) {
     (function(method) {
-      tw.bridge.runtime[method] = function() {
+      calatrava.bridge.runtime[method] = function() {
         var callArgs = [method].concat(_.toArray(arguments));
-        tw.bridge.native.call.apply(tw.bridge.native, callArgs);
+        calatrava.bridge.native.call.apply(calatrava.bridge.native, callArgs);
       };
     }(methods[m]));
   }
 }
+
+calatrava.bridge.support = {
+  cleanValues: function(jsObject) {
+    _.each(_.keys(jsObject), function(key) {
+      if (jsObject[key] === null || jsObject[key] === undefined) {
+        delete jsObject[key];
+      } else if (jsObject[key] === false) {
+        jsObject[key] = 0;
+      } else {
+        if (jsObject[key] instanceof Object) {
+          cleanValues(jsObject[key]);
+        }
+      }
+    });
+  }
+};

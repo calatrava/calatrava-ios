@@ -6,7 +6,7 @@
 
 - (id)registerProxy:(NSString *)proxy forPage:(NSString *)name;
 - (id)attachHandlerTo:(NSString *)proxy forEvent:(NSString *)name;
-- (id)valueFrom:(NSString *)proxy forField:(NSString *)field;
+- (id)valueFrom:(NSString *)proxy forField:(NSString *)field returnedTo:(NSString *)getId;
 - (id)render:(NSString *)proxy with:(NSDictionary *)dataMsg;
 
 @end

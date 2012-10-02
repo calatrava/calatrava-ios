@@ -103,7 +103,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     } else if ([function isEqualToString:@"renderProxy"]) {
       [pageDelegate render:[args objectAtIndex:1] with:[args objectAtIndex:0]];
     } else if ([function isEqualToString:@"valueOfProxyField"]) {
-      [pageDelegate valueFrom:[args objectAtIndex:0] forField:[args objectAtIndex:1]];
+      [pageDelegate valueFrom:[args objectAtIndex:0] forField:[args objectAtIndex:1] returnedTo:[args objectAtIndex:2]];
     } else if ([function isEqualToString:@"issueRequest"]) {
       [requestDelegate requestFrom:[args objectAtIndex:0]
                                url:[args objectAtIndex:1]

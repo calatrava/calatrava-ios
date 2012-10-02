@@ -71,11 +71,13 @@ static TWBridgePageRegistry *bridge_instance = nil;
   return self;
 }
 
-- (id)valueFrom:(NSString *)proxy forField:(NSString *)field
+- (id)valueFrom:(NSString *)proxy forField:(NSString *)field returnedTo:(NSString *)getId
 {
   BaseUIViewController *pageObject = [self ensurePageWithProxyId:proxy];
   
-  return [pageObject valueForField:field];
+  id fieldValue = [pageObject valueForField:field];
+  [jsRt callJsFunction:@"calatrava.inbound.fieldRead" withArgs:@[proxy, getId, fieldValue]];
+  return fieldValue;
 }
 
 - (id)render:(NSString *)proxy with:(NSDictionary *)dataMsg
