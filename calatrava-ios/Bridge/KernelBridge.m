@@ -31,12 +31,11 @@ static KernelBridge *kernel = nil;
   NSString *bundle = [[NSBundle mainBundle] bundlePath];
   
   // Load js libraries
-  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/public/assets/scripts/underscore.js", bundle]];
+  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/public/scripts/underscore.js", bundle]];
   
   // Load js bridge
-  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/public/assets/scripts/env.js", bundle]];
-  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/public/assets/scripts/calatrava.js", bundle]];
-  NSString *loadFileText = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/public/assets/load_file.text", bundle]
+  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/public/scripts/env.js", bundle]];
+  NSString *loadFileText = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/public/load_file.txt", bundle]
                                                      encoding:NSASCIIStringEncoding
                                                         error:nil];
   NSArray *jsFiles = [loadFileText componentsSeparatedByString:@"\n"];
