@@ -9,7 +9,7 @@
                                                   message:[args objectForKey:@"message"]
                                                  delegate:nil
                                         cancelButtonTitle:nil
-                                        otherButtonTitles:nil];
+                                        otherButtonTitles:@"OK", nil];
   [alert show];
   return self;
 }
