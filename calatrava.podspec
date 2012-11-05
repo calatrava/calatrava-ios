@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "calatrava"
-  s.version      = "0.1.1"
+  s.version      = "0.2.0"
   s.summary      = "See http://calatrava.github.com"
   s.description  = <<-DESC
                     Calatrava is a framework for developing cross-platform mobile
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.license      = 'Apache (2.0)'
 
   s.author       = { "Giles Alexander" => "gga@thoughtworks.com" }
-  s.source       = { :git => "https://github.com/calatrava/calatrava-ios.git", :tag => "0.2.0" }
+  s.source       = { :git => "https://github.com/calatrava/calatrava-ios.git", :tag => s.version.to_s }
   s.platform     = :ios, '5.0'
 
   s.source_files = 'calatrava-ios/**/*.{h,m,c}'
