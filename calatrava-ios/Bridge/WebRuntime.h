@@ -14,12 +14,14 @@
   id<JsRtPageDelegate> pageDelegate;
   id<JsRtTimerDelegate> timerDelegate;
   id<JsRtRequestDelegate> requestDelegate;
+  id<JsRtPluginDelegate> pluginDelegate;
 }
 
 @property (nonatomic, retain) id<JsRtPageDelegate> pageDelegate;
 @property (nonatomic, retain) id<JsRtTimerDelegate> timerDelegate;
 @property (nonatomic, retain) id<JsRtRequestDelegate> requestDelegate;
 @property (nonatomic, retain) id<JsRtUiDelegate> uiDelegate;
+@property (nonatomic, retain) id<JsRtPluginDelegate> pluginDelegate;
 
 - (id)init;
 

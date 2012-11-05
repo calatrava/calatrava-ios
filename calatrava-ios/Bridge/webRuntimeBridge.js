@@ -96,7 +96,8 @@ var methods = ["log",
   "attachProxyEventHandler",
   "valueOfProxyField",
   "startTimerWithTimeout",
-  "openUrl"];
+  "openUrl",
+  "callPlugin"];
 
 for (m in methods) {
   if (methods.hasOwnProperty(m)) {

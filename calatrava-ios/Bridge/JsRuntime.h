@@ -33,6 +33,14 @@
 
 @end
 
+@protocol JsRtPluginDelegate <NSObject>
+
+- (id)callPlugin:(NSString *)plugin
+          method:(NSString *)method
+        withArgs:(NSDictionary *)args;
+
+@end
+
 @protocol JsRuntime <NSObject>
 
 - (void)loadJsFile:(NSString *)path;
@@ -42,5 +50,6 @@
 - (id)setRequestDelegate:(id<JsRtRequestDelegate>)delegate;
 - (id)setUiDelegate:(id<JsRtUiDelegate>)delegate;
 - (id)setTimerDelegate:(id<JsRtTimerDelegate>)delegate;
+- (id)setPluginDelegate:(id<JsRtPluginDelegate>)delegate;
 
 @end

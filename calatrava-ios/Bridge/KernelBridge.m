@@ -1,7 +1,9 @@
 #import "KernelBridge.h"
 #import "WebRuntime.h"
-#include "TWBridgePageRegistry.h"
-#include "TWBridgeURLRequestManager.h"
+#import "TWBridgePageRegistry.h"
+#import "TWBridgeURLRequestManager.h"
+#import "PluginRegistry.h"
+#import "AlertPlugin.h"
 
 static KernelBridge *kernel = nil;
 
@@ -48,6 +50,9 @@ static KernelBridge *kernel = nil;
   
   [[TWBridgePageRegistry sharedRegistry] attachToRuntime:jsRt under:root];
   [[TWBridgeURLRequestManager sharedManager] attachToRuntime:jsRt under:root];
+  [jsRt setPluginDelegate:[PluginRegistry sharedRegistry]];
+  [[PluginRegistry sharedRegistry] registerPlugin:[[AlertPlugin alloc] init]
+                                            named:@"alert"];
 }
 
 - (void)launch:(NSString *)flow

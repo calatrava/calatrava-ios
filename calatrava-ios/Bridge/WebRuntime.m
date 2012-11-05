@@ -12,6 +12,7 @@
 @synthesize timerDelegate;
 @synthesize requestDelegate;
 @synthesize uiDelegate;
+@synthesize pluginDelegate;
 
 - (id)init
 {
@@ -123,6 +124,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         }
         [functionsToCall removeAllObjects];
       }
+    } else if ([function isEqualToString:@"callPlugin"]) {
+      [pluginDelegate callPlugin:[args objectAtIndex:0]
+                          method:[args objectAtIndex:1]
+                        withArgs:[args objectAtIndex:2]];
     } else {
       NSLog(@"Unknown function call!");
     }

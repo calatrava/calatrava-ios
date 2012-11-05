@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6088F0D16404949002F6B00 /* PluginRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = C6088F0B16404949002F6B00 /* PluginRegistry.h */; };
+		C6088F0E16404949002F6B00 /* PluginRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = C6088F0C16404949002F6B00 /* PluginRegistry.m */; };
+		C6088F1A1647B2D8002F6B00 /* AlertPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = C6088F181647B2D7002F6B00 /* AlertPlugin.h */; };
+		C6088F1B1647B2D8002F6B00 /* AlertPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = C6088F191647B2D7002F6B00 /* AlertPlugin.m */; };
 		C6301B5215C2036000E9E27F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6301B5115C2036000E9E27F /* Foundation.framework */; };
 		C6301B5815C2036100E9E27F /* calatrava_ios.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301B5715C2036100E9E27F /* calatrava_ios.m */; };
 		C6301C3315C208CF00E9E27F /* BaseUITableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C6301BEE15C208CF00E9E27F /* BaseUITableViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -30,6 +34,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C6088F0B16404949002F6B00 /* PluginRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginRegistry.h; sourceTree = "<group>"; };
+		C6088F0C16404949002F6B00 /* PluginRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PluginRegistry.m; sourceTree = "<group>"; };
+		C6088F171647B275002F6B00 /* RegisteredPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisteredPlugin.h; sourceTree = "<group>"; };
+		C6088F181647B2D7002F6B00 /* AlertPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertPlugin.h; sourceTree = "<group>"; };
+		C6088F191647B2D7002F6B00 /* AlertPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertPlugin.m; sourceTree = "<group>"; };
 		C6301B4E15C2036000E9E27F /* libcalatrava-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcalatrava-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6301B5115C2036000E9E27F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C6301B5515C2036000E9E27F /* calatrava-ios-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "calatrava-ios-Prefix.pch"; sourceTree = "<group>"; };
@@ -137,6 +146,11 @@
 				C632C7E515D6E3CA00203D4B /* JsRuntime.h */,
 				C6C851A615D88AB900445924 /* WebRuntime.h */,
 				C6C851A715D88AB900445924 /* WebRuntime.m */,
+				C6088F0B16404949002F6B00 /* PluginRegistry.h */,
+				C6088F0C16404949002F6B00 /* PluginRegistry.m */,
+				C6088F171647B275002F6B00 /* RegisteredPlugin.h */,
+				C6088F181647B2D7002F6B00 /* AlertPlugin.h */,
+				C6088F191647B2D7002F6B00 /* AlertPlugin.m */,
 			);
 			path = Bridge;
 			sourceTree = "<group>";
@@ -186,6 +200,8 @@
 				C6301C3515C208CF00E9E27F /* BaseUIViewController.h in Headers */,
 				C6301C3915C208CF00E9E27F /* TWBridgeURLRequestManager.h in Headers */,
 				C6C851A815D88AB900445924 /* WebRuntime.h in Headers */,
+				C6088F0D16404949002F6B00 /* PluginRegistry.h in Headers */,
+				C6088F1A1647B2D8002F6B00 /* AlertPlugin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +266,8 @@
 				C6301C6C15C208CF00E9E27F /* WebViewController.m in Sources */,
 				C6301C6E15C208CF00E9E27F /* WidgetController.m in Sources */,
 				C6C851A915D88AB900445924 /* WebRuntime.m in Sources */,
+				C6088F0E16404949002F6B00 /* PluginRegistry.m in Sources */,
+				C6088F1B1647B2D8002F6B00 /* AlertPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
