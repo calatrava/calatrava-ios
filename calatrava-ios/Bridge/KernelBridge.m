@@ -24,6 +24,7 @@ static KernelBridge *kernel = nil;
   {
     //    jsRt = [[EmbeddedRuntime alloc] init];
     jsRt = [[WebRuntime alloc] init];
+    pluginRegistry = [[PluginRegistry alloc] init];
   }
   return self;
 }
@@ -50,9 +51,10 @@ static KernelBridge *kernel = nil;
   
   [[TWBridgePageRegistry sharedRegistry] attachToRuntime:jsRt under:root];
   [[TWBridgeURLRequestManager sharedManager] attachToRuntime:jsRt under:root];
-  [jsRt setPluginDelegate:[PluginRegistry sharedRegistry]];
-  [[PluginRegistry sharedRegistry] registerPlugin:[[AlertPlugin alloc] init]
-                                            named:@"alert"];
+  [pluginRegistry attachToRuntime:jsRt];
+  
+  [pluginRegistry registerPlugin:[[AlertPlugin alloc] init]
+                           named:@"alert"];
 }
 
 - (void)launch:(NSString *)flow

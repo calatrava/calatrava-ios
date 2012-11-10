@@ -17,11 +17,11 @@
   id<JsRtPluginDelegate> pluginDelegate;
 }
 
-@property (nonatomic, retain) id<JsRtPageDelegate> pageDelegate;
-@property (nonatomic, retain) id<JsRtTimerDelegate> timerDelegate;
-@property (nonatomic, retain) id<JsRtRequestDelegate> requestDelegate;
-@property (nonatomic, retain) id<JsRtUiDelegate> uiDelegate;
-@property (nonatomic, retain) id<JsRtPluginDelegate> pluginDelegate;
+@property (nonatomic, strong) id<JsRtPageDelegate> pageDelegate;
+@property (nonatomic, strong) id<JsRtTimerDelegate> timerDelegate;
+@property (nonatomic, strong) id<JsRtRequestDelegate> requestDelegate;
+@property (nonatomic, strong) id<JsRtUiDelegate> uiDelegate;
+@property (nonatomic, strong) id<JsRtPluginDelegate> pluginDelegate;
 
 - (id)init;
 
