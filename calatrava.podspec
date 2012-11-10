@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "calatrava"
-  s.version      = "0.2.0"
+  s.version      = "0.2.1"
   s.summary      = "See http://calatrava.github.com"
   s.description  = <<-DESC
                     Calatrava is a framework for developing cross-platform mobile
