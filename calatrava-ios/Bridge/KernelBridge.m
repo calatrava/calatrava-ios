@@ -29,6 +29,11 @@ static KernelBridge *kernel = nil;
   return self;
 }
 
+- (PluginRegistry *)pluginRegistry
+{
+  return pluginRegistry;
+}
+
 - (void)startWith:(UINavigationController *)root
 {
   NSString *bundle = [[NSBundle mainBundle] bundlePath];
