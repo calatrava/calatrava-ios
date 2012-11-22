@@ -24,13 +24,8 @@
 
 - (id)dispatchEvent:(NSString *)event fromProxy:(NSString *)proxyId withArgs:(NSArray *)args;
 
-- (id)displayWidget:(NSString *)name withOptions:(NSDictionary *)options;
-- (void)displayDialog:(NSString *)dialogName;
-
 - (id)registerPage:(id)page named:(NSString *)name;
 
 - (void)alert:(NSString *)message;
-
-- (id)invokeCallbackForWidget:(NSString *)widget withArgs:(NSArray *)arguments;
 
 @end

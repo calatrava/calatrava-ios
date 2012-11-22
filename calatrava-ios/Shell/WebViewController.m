@@ -1,12 +1,10 @@
 #import "WebViewController.h"
-#import "WidgetController.h"
 
 @interface WebViewController()
 - (void)renderMessage:(NSDictionary *)message;
 - (void)bindWebEvent:(NSString *)event;
 
 - (void)removeWebViewBounceShadow;
-- (NSString *)convertWidgetNameToClassName:(NSString *)widgetName;
 @end
 
 @implementation WebViewController
@@ -18,6 +16,7 @@
       queuedRenders = [[NSMutableOrderedSet alloc] init];
       
       webViewReady = NO;
+      
       _webView = [[UIWebView alloc] init];
       [self setView:_webView];
       [_webView setDelegate:self];
@@ -34,13 +33,6 @@
 {
   // No-op implementation. Override in sub class
   return @"OVERRIDE pageName IN SUB-CLASS";
-}
-
-- (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -81,20 +73,6 @@
 {
   NSString *jsCode = [NSString stringWithFormat:@"window.%@View.bind('%@', tw.batSignalFor('%@'));", [self pageName], event, event];
   [_webView stringByEvaluatingJavaScriptFromString:jsCode];
-}
-
-- (void)displayDialog:(NSString *)dialogName
-{
-  [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.%@View.showDialog('%@');", [self pageName], dialogName]];
-}
-
-#pragma mark - Widget display
-- (id)displayWidget:(NSString *)name withOptions:(NSDictionary *)options {
-
-  WidgetController *widgetController = [WidgetController sharedInstance];
-  [widgetController presentWidget:name withOptions:options withPresentingViewController:self]; 
-
-  return self;
 }
 
 - (void)renderMessage:(NSDictionary *)message
@@ -175,10 +153,6 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (NSString *)convertWidgetNameToClassName:(NSString *)widgetName {
-  return [widgetName stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[widgetName substringToIndex:1] uppercaseString]];
 }
 
 @end

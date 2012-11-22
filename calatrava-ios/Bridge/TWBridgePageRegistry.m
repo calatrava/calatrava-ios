@@ -87,23 +87,6 @@ static TWBridgePageRegistry *bridge_instance = nil;
   return self;
 }
 
-- (id)displayWidget:(NSString *)name withOptions:(NSDictionary *)options {
-  id currentViewController = [root topViewController];
-  [currentViewController displayWidget:name withOptions:options];
-
-  return self;
-}
-
-- (id)invokeCallbackForWidget:(NSString *)widget withArgs:(NSArray *)arguments {
-  NSMutableArray *_args = [[NSMutableArray alloc] init];
-  [_args addObject:widget];
-  [_args addObjectsFromArray:arguments];
-  [jsRt callJsFunction:@"calatrava.inbound.invokeCallback"
-              withArgs:_args];
-
-  return self;
-}
-
 - (id)registerPage:(id)page named:(NSString *)name
 {
   [pageObjects setObject:page forKey:name];
@@ -154,12 +137,6 @@ static TWBridgePageRegistry *bridge_instance = nil;
                                  userInfo:timerId
                                   repeats:NO];
   return self;
-}
-
-- (void)displayDialog:(NSString *)dialogName
-{
-  NSLog(@"Displaying dialog %@", dialogName);
-  [currentPage displayDialog:dialogName];
 }
 
 - (id)ensurePageWithProxyId:(NSString *)proxyId
