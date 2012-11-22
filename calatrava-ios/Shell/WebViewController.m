@@ -2,18 +2,30 @@
 #import "WidgetController.h"
 
 @interface WebViewController()
+- (void)renderMessage:(NSDictionary *)message;
+- (void)bindWebEvent:(NSString *)event;
+
 - (void)removeWebViewBounceShadow;
 - (NSString *)convertWidgetNameToClassName:(NSString *)widgetName;
 @end
 
 @implementation WebViewController
 
-@synthesize _webView;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+      queuedBinds = [[NSMutableOrderedSet alloc] init];
+      queuedRenders = [[NSMutableOrderedSet alloc] init];
+      
       webViewReady = NO;
+      _webView = [[UIWebView alloc] init];
+      [self setView:_webView];
+      [_webView setDelegate:self];
+      [self removeWebViewBounceShadow];
+      
+      NSString *bundle = [[NSBundle mainBundle] bundlePath];
+      [_webView loadRequest:[NSURLRequest requestWithURL:
+                             [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/public/views/%@.html", bundle, [self pageName]]]]];
     }
     return self;
 }
@@ -33,24 +45,6 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  [self._webView setDelegate:self];
-  [self removeWebViewBounceShadow];
-
-  NSString *bundle = [[NSBundle mainBundle] bundlePath];
-  [self._webView loadRequest:[NSURLRequest requestWithURL:
-                            [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/public/views/%@.html", bundle, [self pageName]]]]];
-}
-
-- (void)viewDidUnload {
-  [super viewDidUnload];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   NSLog(@"Dispatching pageOpened for page %@", [self pageName]);
@@ -59,22 +53,34 @@
 
 #pragma mark - Kernel methods
 
-- (id)render:(id)jsViewObject {
-    responseData = jsViewObject;
-    NSLog(@"Response Data: %@", responseData);
-    [self refreshWebView];
-    return self;
+- (void)render:(id)viewMessage
+{
+  if (!webViewReady) {
+    [queuedRenders addObject:viewMessage];
+  } else {
+    [self renderMessage:viewMessage];
+  }
 }
 
 - (id)valueForField:(NSString *)field {
   return [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.%@View.get('%@');", [self pageName], field]];
 }
 
-- (id)bindEvent:(NSString *)event
+- (id)attachHandler:(NSString *)proxyId forEvent:(NSString *)event
+{
+  [super attachHandler:proxyId forEvent:event];
+  if (!webViewReady) {
+    [queuedBinds addObject:event];
+  } else {
+    [self bindWebEvent:event];
+  }
+  return self;
+}
+
+- (void)bindWebEvent:(NSString *)event
 {
   NSString *jsCode = [NSString stringWithFormat:@"window.%@View.bind('%@', tw.batSignalFor('%@'));", [self pageName], event, event];
   [_webView stringByEvaluatingJavaScriptFromString:jsCode];
-  return self;
 }
 
 - (void)displayDialog:(NSString *)dialogName
@@ -91,27 +97,33 @@
   return self;
 }
 
-# pragma mark - WebView delegate methods
-
-- (id)refreshWebView {
-  if(responseData && webViewReady) {
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseData options:kNilOptions error:nil];
-    NSString *responseJson = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    NSLog(@"Web data: %@", responseJson);
-    NSLog(@"Page name: %@", [self pageName]);
-
-    NSString *render = [NSString stringWithFormat:@"window.%@View.render(%@);", [self pageName], responseJson];
-    [_webView stringByEvaluatingJavaScriptFromString:render];
-    responseData = nil;
-  }
-  return self;
+- (void)renderMessage:(NSDictionary *)message
+{
+  NSData *jsonData = [NSJSONSerialization dataWithJSONObject:message
+                                                     options:kNilOptions
+                                                       error:nil];
+  NSString *responseJson = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+  NSLog(@"Web data: %@", responseJson);
+  NSLog(@"Page name: %@", [self pageName]);
+  
+  NSString *render = [NSString stringWithFormat:@"window.%@View.render(%@);", [self pageName], responseJson];
+  [_webView stringByEvaluatingJavaScriptFromString:render];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-  webViewReady = YES;
-  [self webViewReady];
+# pragma mark - WebView delegate methods
 
-  [self refreshWebView];
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+  if (!webViewReady) {
+    for (NSString *event in queuedBinds) {
+      [self bindWebEvent:event];
+    }
+    for (NSDictionary *msg in queuedRenders) {
+      [self renderMessage:msg];
+    }
+    [queuedBinds removeAllObjects];
+    [queuedRenders removeAllObjects];
+  }
+  webViewReady = YES;
 }
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -143,13 +155,9 @@
     return YES;
 }
 
-- (id)webViewReady {
-  return self;
-}
-
 - (id)scrollToTop {
-  [self._webView.scrollView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-  [self._webView.scrollView flashScrollIndicators];
+  [_webView.scrollView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+  [_webView.scrollView flashScrollIndicators];
   return self;
 }
 
