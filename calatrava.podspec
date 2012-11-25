@@ -24,8 +24,6 @@ Pod::Spec.new do |s|
                     'calatrava-ios/Bridge/webRuntime.html',
                     'calatrava-ios/Bridge/webRuntimeBridge.js']
 
-  s.framework    = 'Foundation'
-  s.library      = 'xml2'
+  s.frameworks   = ['Foundation', 'UIKit', 'CoreGraphics']
   s.requires_arc = true
-  s.xcconfig     = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2' }
 end
