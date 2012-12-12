@@ -151,7 +151,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
   {
     NSString *formatted;
     if ([arg isKindOfClass:[NSString class]]) {
-      formatted = [NSString stringWithFormat:@"\"%@\"", arg];
+      formatted = [arg stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+      formatted = [NSString stringWithFormat:@"\"%@\"", [formatted stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
     } else if ([arg isKindOfClass:[NSNumber class]]) {
       formatted = arg;
     } else if ([arg isKindOfClass:[NSDictionary class]] || [arg isKindOfClass:[NSArray class]]) {
