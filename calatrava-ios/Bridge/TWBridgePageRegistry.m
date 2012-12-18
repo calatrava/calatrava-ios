@@ -125,7 +125,7 @@ static TWBridgePageRegistry *bridge_instance = nil;
 {
   NSString *timerId = (NSString *)[theTimer userInfo];
   NSLog(@"Firing timer %@", timerId);
-  [jsRt callJsFunction:@"bridgeFireTimer"
+  [jsRt callJsFunction:@"calatrava.inbound.fireTimer"
               withArgs:@[timerId]];
 }
 
