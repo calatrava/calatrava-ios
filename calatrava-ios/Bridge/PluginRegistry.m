@@ -39,6 +39,7 @@
 {
   [runtime callJsFunction:@"calatrava.inbound.invokePluginCallback"
                  withArgs:@[handle, data]];
+  return self;
 }
 
 @end
