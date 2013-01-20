@@ -1,11 +1,6 @@
-//
-//  AJAXConnection.m
-//
-//  Created by Rajdeep Kwatra on 07/11/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
-//
-
 #import "AJAXConnection.h"
+#import "CalatravaAppDelegate.h"
+
 #define CONNECTION_TIMEOUT   30.0f
 #define REQUEST_TIMEOUT      60.0f
 
@@ -56,10 +51,13 @@
 
 - (void)execute
 {
-    connection = [[NSURLConnection alloc] initWithRequest:request
-                                                 delegate:self
-                                         startImmediately:YES];
-    requestTimer = [NSTimer scheduledTimerWithTimeInterval:REQUEST_TIMEOUT target:self selector:@selector(requestDidTimeout:) userInfo:nil repeats:NO];
+  connection = [[NSURLConnection alloc] initWithRequest:request
+                                               delegate:self
+                                       startImmediately:YES];
+  requestTimer = [NSTimer scheduledTimerWithTimeInterval:REQUEST_TIMEOUT target:self selector:@selector(requestDidTimeout:) userInfo:nil repeats:NO];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [((id<CalatravaAppDelegate>)[[UIApplication sharedApplication] delegate]) ajaxRequestStarted:self];
+  });
 }
 
 - (void)requestDidTimeout:(id)sender {
@@ -70,13 +68,21 @@
 
 #pragma mark NSURLConnectionDelegate methods
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response {
+- (void)connection:(NSURLConnection *)connection
+didReceiveResponse:(NSHTTPURLResponse *)response
+{
   [requestTimer invalidate];
 
   NSLog(@"Connection didReceiveResponse: %@ - %@", response, [response MIMEType]);
   NSInteger statusCode = [response statusCode];
   if (statusCode >= 400) {
     [[self delegate] failedWithError:nil from:reqId];
+  }
+  else
+  {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [((id<CalatravaAppDelegate>)[[UIApplication sharedApplication] delegate]) ajaxRequestCompleted:self];
+    });
   }
 }
 
@@ -89,10 +95,14 @@
   [accumulatedData appendData:data];
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+- (void)connection:(NSURLConnection *)connection
+  didFailWithError:(NSError *)error {
   [requestTimer invalidate];
   NSLog(@"connection didFailWithError: %@", error);
   [[self delegate] failedWithError:error from:reqId];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [((id<CalatravaAppDelegate>)[[UIApplication sharedApplication] delegate]) ajaxRequestCompleted:self];
+  });
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
