@@ -18,12 +18,14 @@
     self = [super init];
     if (self)
     {
-        self->root = newRoot;
-        reqId = requestId;
-        request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]
-                                               cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                           timeoutInterval:CONNECTION_TIMEOUT];
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+      self->root = newRoot;
+      reqId = requestId;
+      request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]
+                                             cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                         timeoutInterval:CONNECTION_TIMEOUT];
+      [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+      if (headers)
+      {
         NSLog(@"HEADERS : %@", headers);
         for (id header in headers) {
           if (header == @"") {
@@ -32,7 +34,8 @@
           NSLog(@"%@ : %@", header, [headers objectForKey:header]);
           [request setValue:[headers objectForKey:header] forHTTPHeaderField:header];
         }
-        accumulatedData = [[NSMutableData alloc] initWithCapacity:1000];
+      }
+      accumulatedData = [[NSMutableData alloc] initWithCapacity:1000];
     }
     return self;
 }

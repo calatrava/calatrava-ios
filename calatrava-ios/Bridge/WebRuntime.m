@@ -3,6 +3,8 @@
 @interface WebRuntime()
 
 - (NSString *)argsToString:(NSArray *)args;
+- (id)objectFromArgs:(NSArray *) args
+             AtIndex:(int)index;
 
 @end
 
@@ -96,25 +98,31 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     if ([function isEqualToString:@"log"]) {
       NSLog(@"WebRTLog: %@", args);
     } else if ([function isEqualToString:@"changePage"]) {
-      [pageDelegate changeToPage:[args objectAtIndex:0]];
+      [pageDelegate changeToPage:[self objectFromArgs:args AtIndex:0]];
     } else if ([function isEqualToString:@"registerProxyForPage"]) {
-      [pageDelegate registerProxy:[args objectAtIndex:0] forPage:[args objectAtIndex:1]];
+      [pageDelegate registerProxy:[self objectFromArgs:args AtIndex:0]
+                          forPage:[self objectFromArgs:args AtIndex:1]];
     } else if ([function isEqualToString:@"attachProxyEventHandler"]) {
-      [pageDelegate attachHandlerTo:[args objectAtIndex:0] forEvent:[args objectAtIndex:1]];
+      [pageDelegate attachHandlerTo:[self objectFromArgs:args AtIndex:0]
+                           forEvent:[self objectFromArgs:args AtIndex:1]];
     } else if ([function isEqualToString:@"renderProxy"]) {
-      [pageDelegate render:[args objectAtIndex:1] with:[args objectAtIndex:0]];
+      [pageDelegate render:[self objectFromArgs:args AtIndex:1]
+                      with:[self objectFromArgs:args AtIndex:0]];
     } else if ([function isEqualToString:@"valueOfProxyField"]) {
-      [pageDelegate valueFrom:[args objectAtIndex:0] forField:[args objectAtIndex:1] returnedTo:[args objectAtIndex:2]];
+      [pageDelegate valueFrom:[self objectFromArgs:args AtIndex:0]
+                     forField:[self objectFromArgs:args AtIndex:1]
+                   returnedTo:[self objectFromArgs:args AtIndex:2]];
     } else if ([function isEqualToString:@"issueRequest"]) {
-      [requestDelegate requestFrom:[args objectAtIndex:0]
-                               url:[args objectAtIndex:1]
-                                as:[args objectAtIndex:2]
-                              with:[args objectAtIndex:3]
-                           headers:[args objectAtIndex:4]];
+      [requestDelegate requestFrom:[self objectFromArgs:args AtIndex:0]
+                               url:[self objectFromArgs:args AtIndex:1]
+                                as:[self objectFromArgs:args AtIndex:2]
+                              with:[self objectFromArgs:args AtIndex:3]
+                           headers:[self objectFromArgs:args AtIndex:4]];
     } else if ([function isEqualToString:@"startTimerWithTimeout"]) {
-      [timerDelegate startTimer:[args objectAtIndex:0] timeout:[[args objectAtIndex:1] integerValue]];
+      [timerDelegate startTimer:[self objectFromArgs:args AtIndex:0]
+                        timeout:[[self objectFromArgs:args AtIndex:1] integerValue]];
     } else if ([function isEqualToString:@"openUrl"]) {
-      [uiDelegate openUrl:[args objectAtIndex:0]];
+      [uiDelegate openUrl:[self objectFromArgs:args AtIndex:0]];
     } else if ([function isEqualToString:@"loadComplete"]) {
       --outstandingScriptLoads;
       if (outstandingScriptLoads == 0) {
@@ -125,9 +133,9 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         [functionsToCall removeAllObjects];
       }
     } else if ([function isEqualToString:@"callPlugin"]) {
-      [pluginDelegate callPlugin:[args objectAtIndex:0]
-                          method:[args objectAtIndex:1]
-                        withArgs:[args objectAtIndex:2]];
+      [pluginDelegate callPlugin:[self objectFromArgs:args AtIndex:0]
+                          method:[self objectFromArgs:args AtIndex:1]
+                        withArgs:[self objectFromArgs:args AtIndex:2]];
     } else {
       NSLog(@"Unknown function call!");
     }
@@ -166,6 +174,20 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
   }
   
   return [formattedArgs componentsJoinedByString:@", "];
+}
+
+- (id)objectFromArgs:(NSArray *) args
+             AtIndex:(int)index
+{
+  id obj = [args objectAtIndex:index];
+  if (obj == [NSNull null])
+  {
+    return nil;
+  }
+  else
+  {
+    return obj;
+  }
 }
 
 @end
