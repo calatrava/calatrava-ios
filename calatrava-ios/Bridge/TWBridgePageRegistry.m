@@ -40,6 +40,7 @@ static TWBridgePageRegistry *bridge_instance = nil;
   
   [jsRt setPageDelegate:self];
   [jsRt setTimerDelegate:self];
+  [jsRt setUiDelegate:self];
   
   return self;
 }
