@@ -70,10 +70,11 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
   isLoadingHtml = NO;
-  for (NSString *file in filesToLoad) {
-    [self loadJsFile:file];
+  if ([filesToLoad count] > 0)
+  {
+    [self loadJsFile:[filesToLoad objectAtIndex:0]];
+    [filesToLoad removeObjectAtIndex:0];
   }
-  [filesToLoad removeAllObjects];
 }
 
 -            (BOOL)webView:(UIWebView *)webView
@@ -125,6 +126,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
       [uiDelegate openUrl:[self objectFromArgs:args AtIndex:0]];
     } else if ([function isEqualToString:@"loadComplete"]) {
       --outstandingScriptLoads;
+      [self webViewDidFinishLoad:webView];
       if (outstandingScriptLoads == 0) {
         for (NSDictionary *call in functionsToCall) {
           [self callJsFunction:[call objectForKey:@"function"]
