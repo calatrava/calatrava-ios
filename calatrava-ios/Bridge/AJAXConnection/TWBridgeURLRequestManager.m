@@ -49,14 +49,17 @@ static TWBridgeURLRequestManager *bridge_instance = nil;
     [outgoing setHttpBody:body];
   }
   [outgoing setDelegate:self];
-  
+
+  [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
   [outgoing execute];
   
+    
   return self;
 }
 
 - (void)receivedData:(NSString*)data from:(NSString *)requestId
 {
+  [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
   [jsRt callJsFunction:@"calatrava.inbound.successfulResponse"
               withArgs:@[requestId, data]];
   [outstandingConnections removeObjectForKey:requestId];
@@ -64,6 +67,7 @@ static TWBridgeURLRequestManager *bridge_instance = nil;
 
 - (void)failedWithError:(NSError*)error from:(NSString *)requestId
 {
+  [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
   [jsRt callJsFunction:@"calatrava.inbound.failureResponse"
               withArgs:@[requestId, [NSNumber numberWithInt:400], @"Failed."]];
   [outstandingConnections removeObjectForKey:requestId];
