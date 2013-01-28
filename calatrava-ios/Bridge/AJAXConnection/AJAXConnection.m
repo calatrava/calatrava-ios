@@ -4,6 +4,12 @@
 #define CONNECTION_TIMEOUT   30.0f
 #define REQUEST_TIMEOUT      60.0f
 
+@interface AJAXConnection ()
+
+- (id)signalCompleteConnection;
+
+@end
+
 @implementation AJAXConnection
 @synthesize delegate;
 
@@ -77,12 +83,11 @@ didReceiveResponse:(NSHTTPURLResponse *)response
   NSInteger statusCode = [response statusCode];
   if (statusCode >= 400) {
     [[self delegate] failedWithError:nil from:reqId];
+    [self signalCompleteConnection];
   }
   else
   {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [((id<CalatravaAppDelegate>)[[UIApplication sharedApplication] delegate]) ajaxRequestCompleted:self];
-    });
+    [self signalCompleteConnection];
   }
 }
 
@@ -100,15 +105,21 @@ didReceiveResponse:(NSHTTPURLResponse *)response
   [requestTimer invalidate];
   NSLog(@"connection didFailWithError: %@", error);
   [[self delegate] failedWithError:error from:reqId];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [((id<CalatravaAppDelegate>)[[UIApplication sharedApplication] delegate]) ajaxRequestCompleted:self];
-  });
+  [self signalCompleteConnection];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
   NSString *jsonString = [[NSString alloc] initWithData:accumulatedData encoding:NSUTF8StringEncoding];
   NSLog(@"Json Val: %@", jsonString);
   [[self delegate] receivedData:jsonString from:reqId];
+}
+
+- (id)signalCompleteConnection
+{
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [((id<CalatravaAppDelegate>)[[UIApplication sharedApplication] delegate]) ajaxRequestCompleted:self];
+  });
+  return self;
 }
 
 @end
