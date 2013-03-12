@@ -61,7 +61,7 @@ static TWBridgePageRegistry *bridge_instance = nil;
 
 - (id)registerProxy:(NSString *)proxyId forPage:(NSString *)name
 {
-  [pageProxyIds setObject:[self convertPageNameToClassName:name] forKey:proxyId];
+  [pageProxyIds setObject:name forKey:proxyId];
   return self;
 }
 
@@ -149,15 +149,12 @@ static TWBridgePageRegistry *bridge_instance = nil;
 - (id)ensurePageWithName:(NSString *)pageName
 {
   NSLog(@"pageName: %@", pageName);
-  pageName = [self convertPageNameToClassName:pageName];
-  NSLog(@"capitalized pageName: %@", pageName);
-  
   id page = [pageObjects objectForKey:pageName];
   NSLog(@"page: %@", page);
   
   if (!page)
   {
-    NSString *viewControllerName = [pageName stringByAppendingString:@"ViewController"];
+    NSString *viewControllerName = [[self convertPageNameToClassName:pageName] stringByAppendingString:@"ViewController"];
     NSLog(@"VC: %@", viewControllerName);
     Class factory = NSClassFromString(viewControllerName);
     
