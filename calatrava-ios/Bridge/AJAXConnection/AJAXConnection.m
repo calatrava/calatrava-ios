@@ -25,8 +25,7 @@
                                              cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                          timeoutInterval:CONNECTION_TIMEOUT];
       [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-      if (headers)
-      {
+      if (headers != ( NSDictionary *) [ NSNull null ]) {
         NSLog(@"HEADERS : %@", headers);
         for (id header in headers) {
           if (header == @"") {
@@ -50,8 +49,10 @@
 
 - (id)setHttpBody:(NSString*)httpBodyString
 {
-    [request setHTTPBody:[httpBodyString dataUsingEncoding:NSISOLatin1StringEncoding]];
-    NSLog(@"[CM] PostData: %@",httpBodyString); 
+    if ( httpBodyString != ( NSString *) [ NSNull null ]) {
+        [request setHTTPBody:[httpBodyString dataUsingEncoding:NSISOLatin1StringEncoding]];
+        NSLog(@"[CM] PostData: %@",httpBodyString);
+    }
     return self;
 }
 

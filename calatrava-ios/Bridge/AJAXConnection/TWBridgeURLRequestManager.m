@@ -57,6 +57,7 @@ static TWBridgeURLRequestManager *bridge_instance = nil;
 
 - (void)receivedData:(NSString*)data from:(NSString *)requestId
 {
+  data = [data stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
   [jsRt callJsFunction:@"calatrava.inbound.successfulResponse"
               withArgs:@[requestId, data]];
   [outstandingConnections removeObjectForKey:requestId];
