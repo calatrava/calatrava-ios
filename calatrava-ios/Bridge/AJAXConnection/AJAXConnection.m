@@ -50,7 +50,7 @@
 
 - (id)setHttpBody:(NSString*)httpBodyString
 {
-    [request setHTTPBody:[httpBodyString dataUsingEncoding:NSISOLatin1StringEncoding]];
+    [request setHTTPBody:[httpBodyString dataUsingEncoding:NSUTF8StringEncoding]];
     NSLog(@"[CM] PostData: %@",httpBodyString); 
     return self;
 }
