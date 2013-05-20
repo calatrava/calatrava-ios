@@ -9,7 +9,7 @@
   NSMutableDictionary *registeredPlugins;
 }
 
-- (id)attachToRuntime:(id<JsRuntime>)rt;
+- (void)attachToRuntime:(id<JsRuntime>)rt;
 
 - (id) registerPlugin:(NSObject<RegisteredPlugin> *)plugin
                 named:(NSString *)name;

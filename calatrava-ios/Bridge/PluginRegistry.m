@@ -12,7 +12,7 @@
   return self;
 }
 
-- (id)attachToRuntime:(id<JsRuntime>)rt
+- (void)attachToRuntime:(id<JsRuntime>)rt
 {
   runtime = rt;
   [rt setPluginDelegate:self];
