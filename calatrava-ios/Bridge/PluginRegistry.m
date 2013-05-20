@@ -16,6 +16,7 @@
 {
   runtime = rt;
   [rt setPluginDelegate:self];
+  return self;
 }
 
 - (id) registerPlugin:(NSObject<RegisteredPlugin> *)plugin
