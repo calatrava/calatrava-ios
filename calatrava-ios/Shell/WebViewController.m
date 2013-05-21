@@ -7,32 +7,46 @@
 - (void)removeWebViewBounceShadow;
 @end
 
-@implementation WebViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-      queuedBinds = [[NSMutableOrderedSet alloc] init];
-      queuedRenders = [[NSMutableOrderedSet alloc] init];
-      
-      webViewReady = NO;
-      
-      _webView = [[UIWebView alloc] init];
-      [self setView:_webView];
-      [_webView setDelegate:self];
-      [self removeWebViewBounceShadow];
-      
-      NSString *bundle = [[NSBundle mainBundle] bundlePath];
-      [_webView loadRequest:[NSURLRequest requestWithURL:
-                             [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/public/views/%@.html", bundle, [self pageName]]]]];
-    }
-    return self;
+@implementation WebViewController {
+  NSString *pageName;
 }
 
-- (NSString *)pageName
-{
-  // No-op implementation. Override in sub class
-  return @"OVERRIDE pageName IN SUB-CLASS";
+- (id)initWithPageName:(NSString *)thePageName {
+  if (self = [super initWithNibName:nil bundle:nil]) {
+    pageName = thePageName;
+    [self initWebView];
+  }
+
+  return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+    pageName = @"OVERRIDE pageName IN SUB-CLASS"; // default page name
+    [self initWebView];
+  }
+  
+  return self;
+}
+
+- (void)initWebView {
+  queuedBinds = [[NSMutableOrderedSet alloc] init];
+  queuedRenders = [[NSMutableOrderedSet alloc] init];
+  
+  webViewReady = NO;
+  
+  _webView = [[UIWebView alloc] init];
+  [self setView:_webView];
+  [_webView setDelegate:self];
+  [self removeWebViewBounceShadow];
+  
+  NSString *bundle = [[NSBundle mainBundle] bundlePath];
+  [_webView loadRequest:[NSURLRequest requestWithURL:
+                         [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/public/views/%@.html", bundle, [self pageName]]]]];
+}
+
+- (NSString *)pageName {
+  return pageName;
 }
 
 #pragma mark - View lifecycle

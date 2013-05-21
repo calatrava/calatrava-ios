@@ -1,4 +1,5 @@
 #import "TWBridgePageRegistry.h"
+#import "WebViewController.h"
 
 static TWBridgePageRegistry *bridge_instance = nil;
 
@@ -60,7 +61,7 @@ static TWBridgePageRegistry *bridge_instance = nil;
 
 - (id)registerProxy:(NSString *)proxyId forPage:(NSString *)name
 {
-  [pageProxyIds setObject:[self convertPageNameToClassName:name] forKey:proxyId];
+  [pageProxyIds setObject:name forKey:proxyId];
   return self;
 }
 
@@ -148,23 +149,27 @@ static TWBridgePageRegistry *bridge_instance = nil;
 - (id)ensurePageWithName:(NSString *)pageName
 {
   NSLog(@"pageName: %@", pageName);
-  pageName = [self convertPageNameToClassName:pageName];
-  NSLog(@"capitalized pageName: %@", pageName);
-  
   id page = [pageObjects objectForKey:pageName];
   NSLog(@"page: %@", page);
   
   if (!page)
   {
-    NSString *viewControllerName = [pageName stringByAppendingString:@"ViewController"];
-    id factory = NSClassFromString(viewControllerName);
+    NSString *viewControllerName = [[self convertPageNameToClassName:pageName] stringByAppendingString:@"ViewController"];
     NSLog(@"VC: %@", viewControllerName);
-    page = [[factory alloc] initWithNibName:nil bundle:nil];
+    Class factory = NSClassFromString(viewControllerName);
+    
+    if (factory) {
+      page = [[factory alloc] initWithNibName:nil bundle:nil];
+    } else {
+      page = [[WebViewController alloc] initWithPageName:pageName];
+    }
+
     [pageObjects setObject:page forKey:pageName];
   }
   
   return page;
 }
+
 
 - (NSString *)convertPageNameToClassName:(NSString *)pageName {
   return [pageName stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[pageName substringToIndex:1] uppercaseString]];

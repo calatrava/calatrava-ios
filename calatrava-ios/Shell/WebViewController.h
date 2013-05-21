@@ -9,6 +9,7 @@
   BOOL webViewReady;
 }
 
+- (id)initWithPageName:(NSString *)thePageName;
 - (NSString *)pageName;
 
 @end
