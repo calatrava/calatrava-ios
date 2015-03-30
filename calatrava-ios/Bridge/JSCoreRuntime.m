@@ -6,10 +6,6 @@
     JSContext *context;
 }
 
-- (NSString *)argsToString:(NSArray *)args;
-- (id)objectFromArgs:(NSArray *) args
-             AtIndex:(int)index;
-
 @end
 
 @implementation JSCoreRuntime
@@ -34,9 +30,7 @@
     NSError *error;
     
     NSString *javascriptFile =[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
-    
 
-    
     if (error) {
         NSLog(@"Error:%@",error);
     }
@@ -44,49 +38,10 @@
     return javascriptFile;
 }
 
-- (void)callJsFunction:(NSString *)function withArgs:(NSArray *)args
+- (id)callJsFunction:(NSString *)function withArgs:(NSArray *)args
 {
-  NSString *funcCall = [NSString stringWithFormat:@"%@(%@);", function, [self argsToString:args]];
-  JSValue *returnVal = [context evaluateScript:funcCall];
-  NSLog(@"Function '%@' returned: %@", funcCall, returnVal.toString);
-}
-
-- (NSString *)argsToString:(NSArray *)args
-{
-    NSMutableArray *formattedArgs = [[NSMutableArray alloc] initWithCapacity:[args count]];
-    for (id arg in args)
-    {
-        NSString *formatted;
-        if ([arg isKindOfClass:[NSString class]]) {
-            formatted = [arg stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
-            formatted = [NSString stringWithFormat:@"\"%@\"", [formatted stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
-        } else if ([arg isKindOfClass:[NSNumber class]]) {
-            formatted = arg;
-        } else if ([arg isKindOfClass:[NSDictionary class]] || [arg isKindOfClass:[NSArray class]]) {
-            NSError *err;
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arg options:0 error:&err];
-            formatted = [[NSString alloc] initWithBytes:[jsonData bytes]
-                                                 length:[jsonData length]
-                                               encoding:NSUTF8StringEncoding];
-        }
-        [formattedArgs addObject:formatted];
-    }
-    
-    return [formattedArgs componentsJoinedByString:@", "];
-}
-
-- (id)objectFromArgs:(NSArray *) args
-             AtIndex:(int)index
-{
-    id obj = [args objectAtIndex:index];
-    if (obj == [NSNull null])
-    {
-        return nil;
-    }
-    else
-    {
-        return obj;
-    }
+    JSValue *functionValue = [context evaluateScript:function];
+    return [functionValue callWithArguments:args];
 }
 
 - (void)changeToPage:(NSString *)target{
