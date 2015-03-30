@@ -97,6 +97,14 @@ calatrava.bridge.runtime.log = function(log) {
     nativeRuntime.log(log);
 }
 
+calatrava.bridge.runtime.startTimerWithTimeout = function(timerId, timeout) {
+    nativeRuntime.startTimerTimeout(timerId, timeout);
+}
+
+calatrava.bridge.runtime.openUrl = function(url) {
+    nativeRuntime.openUrl(url);
+}
+
 calatrava.bridge.support = {
   cleanValues: function(jsObject) {
     _.each(_.keys(jsObject), function(key) {
