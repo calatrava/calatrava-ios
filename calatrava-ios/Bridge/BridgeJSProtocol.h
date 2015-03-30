@@ -18,5 +18,6 @@
 - (void)callPlugin:(NSString *)plugin
           method:(NSString *)method
         withArgs:(NSDictionary *)args;
+- (void)log:(NSString *)string;
 
 @end

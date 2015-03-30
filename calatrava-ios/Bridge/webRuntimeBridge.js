@@ -93,6 +93,9 @@ calatrava.bridge.runtime.valueOfProxyField = function(proxyId, field, event) {
     nativeRuntime.valueFromForFieldReturnedTo(proxyId,field,event);
 }
 
+calatrava.bridge.runtime.log = function(log) {
+    nativeRuntime.log(log);
+}
 
 calatrava.bridge.support = {
   cleanValues: function(jsObject) {

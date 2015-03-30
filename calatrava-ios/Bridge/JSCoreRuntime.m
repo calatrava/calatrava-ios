@@ -100,6 +100,11 @@
 - (void)changeToPage:(NSString *)target{
     [self.pageDelegate changeToPage:target];
 }
+
+- (void)log:(NSString *)string{
+    NSLog(@"%@",string);
+}
+
 - (void)registerProxy:(NSString *)proxy forPage:(NSString *)name{
     [self.pageDelegate registerProxy:proxy forPage:name];
 }
