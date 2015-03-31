@@ -48,7 +48,7 @@ static KernelBridge *kernel = nil;
                                                      encoding:NSASCIIStringEncoding
                                                         error:nil];
   //Load webRuntime
-  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/webRuntimeBridge.js", [[NSBundle mainBundle] bundlePath]]];
+  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/runtimeBridge.js", [[NSBundle mainBundle] bundlePath]]];
     
   NSArray *jsFiles = [loadFileText componentsSeparatedByString:@"\n"];
   for (NSString *jsFile in jsFiles) {

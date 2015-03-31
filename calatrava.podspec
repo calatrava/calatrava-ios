@@ -20,8 +20,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '5.0'
 
   s.source_files = 'calatrava-ios/**/*.{h,m,c}'
-  s.resources    = ['calatrava-ios/Bridge/webRuntimeBridge.js']
-
+  s.resources    = ['calatrava-ios/Bridge/runtimeBridge.js.js']
   s.frameworks   = ['Foundation', 'UIKit', 'CoreGraphics']
   s.requires_arc = true
 end
