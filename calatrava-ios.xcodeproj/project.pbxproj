@@ -27,6 +27,7 @@
 		C6301C6C15C208CF00E9E27F /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6301C2F15C208CF00E9E27F /* WebViewController.m */; };
 		C6C851A815D88AB900445924 /* WebRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = C6C851A615D88AB900445924 /* WebRuntime.h */; };
 		C6C851A915D88AB900445924 /* WebRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C851A715D88AB900445924 /* WebRuntime.m */; };
+		FF51B9CC1ACA710600256B69 /* BridgeJSProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = FF51B9CB1ACA710600256B69 /* BridgeJSProtocol.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		C632C7E515D6E3CA00203D4B /* JsRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JsRuntime.h; sourceTree = "<group>"; };
 		C6C851A615D88AB900445924 /* WebRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebRuntime.h; sourceTree = "<group>"; };
 		C6C851A715D88AB900445924 /* WebRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebRuntime.m; sourceTree = "<group>"; };
+		FF51B9CB1ACA710600256B69 /* BridgeJSProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeJSProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				C6088F171647B275002F6B00 /* RegisteredPlugin.h */,
 				C6088F181647B2D7002F6B00 /* AlertPlugin.h */,
 				C6088F191647B2D7002F6B00 /* AlertPlugin.m */,
+				FF51B9CB1ACA710600256B69 /* BridgeJSProtocol.h */,
 			);
 			path = Bridge;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 				C6301C6B15C208CF00E9E27F /* WebViewController.h in Headers */,
 				C6301C3515C208CF00E9E27F /* BaseUIViewController.h in Headers */,
 				C6301C3915C208CF00E9E27F /* TWBridgeURLRequestManager.h in Headers */,
+				FF51B9CC1ACA710600256B69 /* BridgeJSProtocol.h in Headers */,
 				C6C851A815D88AB900445924 /* WebRuntime.h in Headers */,
 				C6088F0D16404949002F6B00 /* PluginRegistry.h in Headers */,
 				C6088F1A1647B2D8002F6B00 /* AlertPlugin.h in Headers */,
