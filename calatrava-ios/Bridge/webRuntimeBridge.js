@@ -53,13 +53,7 @@ calatrava.bridge.runtime = {
   },
 
   issueRequest: function(options) {
-    calatrava.bridge.native.call("issueRequest",
-      options.requestId,
-      options.url,
-      options.method,
-      options.body,
-      options.headers
-    );
+      nativeRuntime.requestFromUrlAsWithHeaders(options.requestId,options.url,options.method,options.body,options.headers);
   }
 };
 
@@ -78,6 +72,10 @@ for (m in methods) {
       };
     }(methods[m]));
   }
+
+calatrava.bridge.runtime.callPlugin = function (pluginName, method, argMessage) {
+    console.log('calatrava.bridge.runtime.callPlugin called')
+    nativeRuntime.callPluginMethodWithArgs(pluginName,method,argMessage);
 }
 
 calatrava.bridge.runtime.changePage = function(target) {
@@ -97,7 +95,7 @@ calatrava.bridge.runtime.attachProxyEventHandler = function(proxyId, event) {
 
 calatrava.bridge.runtime.valueOfProxyField = function(proxyId, field, event) {
     console.log('calatrava.bridge.valueOfProxyField called');
-    nativeRuntime.valueFromForFieldReturnedTo(proxyId, event);
+    nativeRuntime.valueFromForFieldReturnedTo(proxyId,field,event);
 }
 
 
