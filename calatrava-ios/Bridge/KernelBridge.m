@@ -4,6 +4,7 @@
 #import "TWBridgeURLRequestManager.h"
 #import "PluginRegistry.h"
 #import "AlertPlugin.h"
+#import "JSCoreRuntime.h"
 
 static KernelBridge *kernel = nil;
 
@@ -23,7 +24,7 @@ static KernelBridge *kernel = nil;
   if (self = [super init])
   {
     //    jsRt = [[EmbeddedRuntime alloc] init];
-    jsRt = [[WebRuntime alloc] init];
+    jsRt = [[JSCoreRuntime alloc] init];
     pluginRegistry = [[PluginRegistry alloc] init];
   }
   return self;
