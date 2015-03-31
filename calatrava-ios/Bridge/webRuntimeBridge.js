@@ -74,27 +74,22 @@ for (m in methods) {
   }
 
 calatrava.bridge.runtime.callPlugin = function (pluginName, method, argMessage) {
-    console.log('calatrava.bridge.runtime.callPlugin called')
     nativeRuntime.callPluginMethodWithArgs(pluginName,method,argMessage);
 }
 
 calatrava.bridge.runtime.changePage = function(target) {
-    console.log('calatrava.bridge.changePage called');
     nativeRuntime.changeToPage(target);
 }
 
 calatrava.bridge.runtime.registerProxyForPage = function(proxyId, pageName) {
-    console.log('calatrava.bridge.registerProxyForPage called');
     nativeRuntime.registerProxyForPage(proxyId, pageName);
 }
 
 calatrava.bridge.runtime.attachProxyEventHandler = function(proxyId, event) {
-    console.log('calatrava.bridge.attachProxyEventHandler called');
     nativeRuntime.attachHandlerToForEvent(proxyId, event);
 }
 
 calatrava.bridge.runtime.valueOfProxyField = function(proxyId, field, event) {
-    console.log('calatrava.bridge.valueOfProxyField called');
     nativeRuntime.valueFromForFieldReturnedTo(proxyId,field,event);
 }
 
