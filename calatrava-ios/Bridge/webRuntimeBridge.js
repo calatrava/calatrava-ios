@@ -29,35 +29,8 @@ calatrava.bridge.native = {
 
   getArgs: function(argId) {
     return JSON.stringify(calatrava.bridge.args.retrieve(argId));
-  },
-
-  call: function(target) {
-    var argId = calatrava.bridge.args.store(_.toArray(arguments).slice(1));
-    var callFrame = document.createElement('iframe');
-    callFrame.setAttribute('id', 'callback_iframe' + argId);
-    callFrame.setAttribute('style', 'display:none;');
-    callFrame.setAttribute('height', '0px');
-    callFrame.setAttribute('width', '0px');
-    callFrame.setAttribute('frameborder', '0');
-    callFrame.setAttribute('src', 'native-call:' + target + '&' + argId);
-
-    document.documentElement.appendChild(callFrame);
-    document.documentElement.removeChild(callFrame);
-  },
-
-  load: function(path) {
-    var scriptEl = document.createElement('script');
-    scriptEl.type = "text/javascript";
-    scriptEl.src = path;
-    scriptEl.onload = calatrava.bridge.native.loadComplete;
-    document.body.appendChild(scriptEl);
-    return "successful load of '" + path + "'";
-  },
-  
-  loadComplete: function() {
-    calatrava.bridge.native.call('loadComplete');
   }
-  
+
 };
 
 calatrava.bridge.runtime = {
@@ -75,8 +48,8 @@ calatrava.bridge.runtime = {
     if (viewObject != undefined) {
       calatrava.bridge.support.cleanValues(viewObject);
     }
-
-    calatrava.bridge.native.call("renderProxy", viewObject, proxyId);
+      
+      nativeRuntime.renderWith(proxyId, viewObject);
   },
 
   issueRequest: function(options) {
@@ -91,10 +64,7 @@ calatrava.bridge.runtime = {
 };
 
 var methods = ["log",
-  "changePage",
-  "registerProxyForPage",
   "attachProxyEventHandler",
-  "valueOfProxyField",
   "startTimerWithTimeout",
   "openUrl",
   "callPlugin"];
@@ -109,6 +79,27 @@ for (m in methods) {
     }(methods[m]));
   }
 }
+
+calatrava.bridge.runtime.changePage = function(target) {
+    console.log('calatrava.bridge.changePage called');
+    nativeRuntime.changeToPage(target);
+}
+
+calatrava.bridge.runtime.registerProxyForPage = function(proxyId, pageName) {
+    console.log('calatrava.bridge.registerProxyForPage called');
+    nativeRuntime.registerProxyForPage(proxyId, pageName);
+}
+
+calatrava.bridge.runtime.attachProxyEventHandler = function(proxyId, event) {
+    console.log('calatrava.bridge.attachProxyEventHandler called');
+    nativeRuntime.attachHandlerToForEvent(proxyId, event);
+}
+
+calatrava.bridge.runtime.valueOfProxyField = function(proxyId, field, event) {
+    console.log('calatrava.bridge.valueOfProxyField called');
+    nativeRuntime.valueFromForFieldReturnedTo(proxyId, event);
+}
+
 
 calatrava.bridge.support = {
   cleanValues: function(jsObject) {
