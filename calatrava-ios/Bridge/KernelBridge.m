@@ -38,6 +38,7 @@ static KernelBridge *kernel = nil;
 - (void)startWith:(UINavigationController *)root
 {
   NSString *bundle = [[NSBundle mainBundle] bundlePath];
+    
   
   // Load js libraries
   [jsRt loadJsFile:[NSString stringWithFormat:@"%@/public/scripts/underscore.js", bundle]];
@@ -47,11 +48,15 @@ static KernelBridge *kernel = nil;
   NSString *loadFileText = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/public/load_file.txt", bundle]
                                                      encoding:NSASCIIStringEncoding
                                                         error:nil];
+  //Load webRuntime
+  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/webRuntimeBridge.js", [[NSBundle mainBundle] bundlePath]]];
+    
   NSArray *jsFiles = [loadFileText componentsSeparatedByString:@"\n"];
   for (NSString *jsFile in jsFiles) {
     if ([jsFile length] != 0)
     {
-      [jsRt loadJsFile:[NSString stringWithFormat:jsFile, bundle]];
+       NSString *file = [NSString stringWithFormat:@"%@/%@", bundle, jsFile];
+      [jsRt loadJsFile:file];
     }
   }
   
