@@ -57,21 +57,6 @@ calatrava.bridge.runtime = {
   }
 };
 
-var methods = ["log",
-  "attachProxyEventHandler",
-  "startTimerWithTimeout",
-  "openUrl",
-  "callPlugin"];
-
-for (m in methods) {
-  if (methods.hasOwnProperty(m)) {
-    (function(method) {
-      calatrava.bridge.runtime[method] = function() {
-        var callArgs = [method].concat(_.toArray(arguments));
-        calatrava.bridge.native.call.apply(calatrava.bridge.native, callArgs);
-      };
-    }(methods[m]));
-  }
 
 calatrava.bridge.runtime.callPlugin = function (pluginName, method, argMessage) {
     nativeRuntime.callPluginMethodWithArgs(pluginName,method,argMessage);
