@@ -1,9 +1,9 @@
 #import "KernelBridge.h"
-#import "WebRuntime.h"
 #import "TWBridgePageRegistry.h"
 #import "TWBridgeURLRequestManager.h"
 #import "PluginRegistry.h"
 #import "AlertPlugin.h"
+#import "JSCoreRuntime.h"
 
 static KernelBridge *kernel = nil;
 
@@ -23,7 +23,7 @@ static KernelBridge *kernel = nil;
   if (self = [super init])
   {
     //    jsRt = [[EmbeddedRuntime alloc] init];
-    jsRt = [[WebRuntime alloc] init];
+    jsRt = [[JSCoreRuntime alloc] init];
     pluginRegistry = [[PluginRegistry alloc] init];
   }
   return self;
@@ -37,6 +37,7 @@ static KernelBridge *kernel = nil;
 - (void)startWith:(UINavigationController *)root
 {
   NSString *bundle = [[NSBundle mainBundle] bundlePath];
+    
   
   // Load js libraries
   [jsRt loadJsFile:[NSString stringWithFormat:@"%@/public/scripts/underscore.js", bundle]];
@@ -46,11 +47,15 @@ static KernelBridge *kernel = nil;
   NSString *loadFileText = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/public/load_file.txt", bundle]
                                                      encoding:NSASCIIStringEncoding
                                                         error:nil];
+  //Load webRuntime
+  [jsRt loadJsFile:[NSString stringWithFormat:@"%@/runtimeBridge.js", [[NSBundle mainBundle] bundlePath]]];
+    
   NSArray *jsFiles = [loadFileText componentsSeparatedByString:@"\n"];
   for (NSString *jsFile in jsFiles) {
     if ([jsFile length] != 0)
     {
-      [jsRt loadJsFile:[NSString stringWithFormat:jsFile, bundle]];
+       NSString *file = [NSString stringWithFormat:@"%@/%@", bundle, jsFile];
+      [jsRt loadJsFile:file];
     }
   }
   

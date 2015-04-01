@@ -44,7 +44,7 @@
 @protocol JsRuntime <NSObject>
 
 - (void)loadJsFile:(NSString *)path;
-- (void)callJsFunction:(NSString *)function withArgs:(NSArray *)args;
+- (id)callJsFunction:(NSString *)function withArgs:(NSArray *)args;
 
 - (id)setPageDelegate:(id<JsRtPageDelegate>)delegate;
 - (id)setRequestDelegate:(id<JsRtRequestDelegate>)delegate;
